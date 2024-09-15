@@ -15,6 +15,8 @@ public sealed class GameFlow : MonoBehaviour
     public InfoPopupController InfoPopupController;
     public ArrangementModeControllerBase ArrangementModeController;
 
+  public AudioClip ExplorationLoop;
+
     private Quest CurrentQuest;
 
     public bool ShowDebugger;
@@ -30,7 +32,9 @@ public sealed class GameFlow : MonoBehaviour
         }
 
         Instance = this;
-    }
+        Audio.SetMusicVolume(3);
+        Audio.PlayMusic(ExplorationLoop);
+  }
 
     public void HandleInteraction(Quest quest)
     {

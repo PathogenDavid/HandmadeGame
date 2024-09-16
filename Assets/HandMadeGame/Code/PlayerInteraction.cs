@@ -20,14 +20,14 @@ public sealed class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        DialogueController.DialogueStart += () =>
+        UiController.UiInteractionStart += () =>
         {
             Suppressed = true;
             CurrentFocus = null;
             ControllerPrompt.Hide();
         };
 
-        DialogueController.DialogueEnd += () => Suppressed = false;
+        UiController.UiInteractionEnd += () => Suppressed = false;
     }
 
     private Collider[] _Colliders = new Collider[8];

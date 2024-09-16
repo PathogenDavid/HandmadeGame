@@ -19,5 +19,6 @@ public sealed class SceneSelector : MonoBehaviour
 
         SceneButton("GameplayFlowTestScene");
         SceneButton("BirdController");
+        SceneButton("Main");
     }
 }

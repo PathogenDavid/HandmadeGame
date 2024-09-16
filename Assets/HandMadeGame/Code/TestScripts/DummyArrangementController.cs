@@ -10,7 +10,11 @@ public sealed class DummyArrangementController : ArrangementModeControllerBase
         => NestItems = GetComponentsInChildren<NestItem>();
 
     public override void StartArrangementMode(Quest quest)
-        => Target = quest;
+    {
+        Debug.Assert(Target == null);
+        UiController.StartUiInteraction();
+        Target = quest;
+    }
 
     private void OnGUI()
     {
@@ -50,6 +54,7 @@ public sealed class DummyArrangementController : ArrangementModeControllerBase
         {
             GameFlow.Instance.EndArrangementMode(Target);
             Target = null;
+            UiController.EndUiInteraction();
         }
 
         GUILayout.EndArea();

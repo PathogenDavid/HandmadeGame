@@ -18,6 +18,7 @@ public sealed class InfoPopupController : MonoBehaviour
         Text.text = UiController.ProcessDisplayString(text);
         gameObject.SetActive(true);
         DismissAction = dismissAction;
+        UiController.StartUiInteraction();
         ControllerPrompt.Show(UiController.InteractionKey, "Dismiss");
     }
 
@@ -32,6 +33,7 @@ public sealed class InfoPopupController : MonoBehaviour
             {
                 ControllerPrompt.Hide();
                 gameObject.SetActive(false);
+                UiController.EndUiInteraction();
                 DismissAction();
             }
         }

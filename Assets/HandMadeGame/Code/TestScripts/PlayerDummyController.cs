@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class PlayerDummyController : MonoBehaviour
+public sealed class PlayerDummyController : MonoBehaviour
 {
     private bool Suppressed = false;
 
     private void Awake()
     {
-        DialogueController.DialogueStart += () => Suppressed = true;
-        DialogueController.DialogueEnd += () => Suppressed = false;
+        UiController.UiInteractionStart += () => Suppressed = true;
+        UiController.UiInteractionEnd += () => Suppressed = false;
     }
 
     private void FixedUpdate()

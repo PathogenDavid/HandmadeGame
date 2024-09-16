@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/HandMadeGame/Maps/Main.unity
+    guid: 0093a7e89e23a204698b81953f7618fc
+  - enabled: 1
     path: Assets/HandMadeGame/Maps/Mugs - Scene1 - OneColorVariousParameters.unity
     guid: c26fc63e05a02aa47bb135591a8ca7f7
   - enabled: 1

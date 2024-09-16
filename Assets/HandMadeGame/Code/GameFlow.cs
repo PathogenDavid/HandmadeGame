@@ -21,7 +21,6 @@ public sealed class GameFlow : MonoBehaviour
 
     public bool ShowDebugger;
 
-
     private void Awake()
     {
         if (Instance != null)
@@ -38,8 +37,6 @@ public sealed class GameFlow : MonoBehaviour
 
     public void HandleInteraction(Quest quest)
     {
-        Debug.Log($"Interacting with quest '{quest.name}'");
-
         switch (quest.CurrentState)
         {
             case QuestState.NotStarted:
@@ -71,8 +68,7 @@ public sealed class GameFlow : MonoBehaviour
                         () =>
                         {
                             InfoPopupController.ShowPopup(quest.QuestDescription);
-                            quest.CurrentState = QuestState.Accepted;
-                            CurrentQuest = quest;
+                            AcceptQuest(quest);
                         }),
                     () => DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestRejectedDialogue)
                 );
@@ -107,9 +103,19 @@ public sealed class GameFlow : MonoBehaviour
         }
     }
 
+    private void AcceptQuest(Quest quest)
+    {
+        Debug.Assert(CurrentQuest == null);
+
+        quest.CurrentState = QuestState.Accepted;
+        CurrentQuest = quest;
+
+        foreach (GameObject gameObject in quest.SpawnOnAccept)
+            gameObject.SetActive(true);
+    }
+
     public void HandleInteraction(NestItem item)
     {
-        Debug.Log($"Interacting with nest item '{item.name}'");
         Inventory.Add(item);
         item.gameObject.SetActive(false);
     }

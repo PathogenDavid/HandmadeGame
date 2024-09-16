@@ -35,7 +35,7 @@ public class UiInvItemController : MonoBehaviour, IPointerDownHandler, IPointerU
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
         Vector2 mouseCoords = Input.mousePosition;
         Vector2 boardLoc = FindTileLocation(mouseCoords);
-        bool success = ac.UpdateBoard(boardLoc, invIndex, this.gameObject.GetComponent<Image>());
+        bool success = ac.UpdateBoardFromInv(boardLoc, invIndex, this.gameObject.GetComponent<Image>());
     }
 
     private Vector2 FindTileLocation(Vector2 mouseCoords) {

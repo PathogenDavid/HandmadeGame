@@ -104,32 +104,19 @@ public class ArrangementController : MonoBehaviour
                     break;
                 }
             }
-            if (emptyInvIndex == invPos) {
-                int intPos = (int)newPos[1] + (3 * (int)newPos[0]);
-                Image temp = Image.Instantiate(hotbar[emptyInvIndex].GetComponent<Image>());
-                hotbar[emptyInvIndex].GetComponent<Image>().color = internalDisplay[intPos].GetComponent<Image>().color;
-                int temp2 = Inventory[emptyInvIndex];
-                Inventory[emptyInvIndex] = Board[(int)newPos[0], (int)newPos[1]];
-                Inventory[invPos] = Board[(int)newPos[0], (int)newPos[1]];
-                Board[(int)newPos[0], (int)newPos[1]] = temp2;
-                internalDisplay[intPos].SetActive(true);
-                internalDisplay[intPos].GetComponent<Image>().color = temp.color;
-                return true;
-            } else {
-                hotbar[emptyInvIndex].SetActive(true);
-                int internalPos = (int)newPos[1] + (3 * (int)newPos[0]);
-                hotbar[emptyInvIndex].GetComponent<Image>().color = internalDisplay[internalPos].GetComponent<Image>().color;
-                Inventory[emptyInvIndex] = Board[(int)newPos[0], (int)newPos[1]];
-                Board[(int)newPos[0], (int)newPos[1]] = Inventory[invPos];
-                Inventory[invPos] = -1;
-                internalDisplay[internalPos].SetActive(true);
-                internalDisplay[internalPos].GetComponent<Image>().color = img.color;
-                hotbar[invPos].SetActive(false);
-                return true;
-            }
+            hotbar[emptyInvIndex].SetActive(true);
+            int newInternalPos = (int)newPos[1] + (3 * (int)newPos[0]);
+            int curInternalPos = (int)curPos[1] + (3 * (int)curPos[0]);
+            hotbar[emptyInvIndex].GetComponent<Image>().color = internalDisplay[newInternalPos].GetComponent<Image>().color;
+            Inventory[emptyInvIndex] = Board[(int)newPos[0], (int)newPos[1]];
+            Board[(int)newPos[0], (int)newPos[1]] = Board[(int)curPos[0], (int)curPos[1]];
+            Board[(int)curPos[0], (int)curPos[1]] = 0;
+            internalDisplay[newInternalPos].GetComponent<Image>().color = img.color;
+            internalDisplay[curInternalPos].SetActive(false);
+            return true;
         } else { // otherwise, just move it
             Board[(int)newPos[0], (int)newPos[1]] = Board[(int)curPos[0], (int)curPos[1]];
-            Board[(int)curPos[0], (int)curPos[1]] = -1;
+            Board[(int)curPos[0], (int)curPos[1]] = 0;
             int newInternalPos = (int)newPos[1] + (3 * (int)newPos[0]);
             int curInternalPos = (int)curPos[1] + (3 * (int)curPos[0]);
             internalDisplay[newInternalPos].SetActive(true);

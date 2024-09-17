@@ -68,7 +68,7 @@ public class ArrangementController : MonoBehaviour
 
     public ref DummyItem GetBoardItemSlot(Vector2Int pos)
     {
-        if (pos.x < 0 || pos.x >= BoardHeight || pos.y < 0 || pos.y >= BoardWidth)
+        if (pos.x < 0 || pos.x >= BoardWidth || pos.y < 0 || pos.y >= BoardHeight)
             throw new ArgumentOutOfRangeException(nameof(pos));
 
         return ref Board[pos.x, pos.y];
@@ -139,12 +139,12 @@ public class ArrangementController : MonoBehaviour
         for (int i = 0; i < hotbar.Count; i++)
             hotbar[i].GetComponent<Image>().color = Inventory[i]?.Color ?? none;
 
-        for (int r = 0; r < BoardHeight; r++)
+        for (int y = 0; y < BoardHeight; y++)
         {
-            for (int c = 0; c < BoardWidth; c++)
+            for (int x = 0; x < BoardWidth; x++)
             {
-                int internalDisplayIndex = c + (BoardHeight * r);
-                internalDisplay[internalDisplayIndex].GetComponent<Image>().color = Board[r, c]?.Color ?? none;
+                int internalDisplayIndex = x + (BoardHeight * y);
+                internalDisplay[internalDisplayIndex].GetComponent<Image>().color = Board[x, y]?.Color ?? none;
             }
         }
     }
@@ -186,33 +186,40 @@ public class ArrangementController : MonoBehaviour
     internal static bool FindTileLocation(Vector2 mouseCoords, out Vector2Int boardPos) {
         float relativeX = mouseCoords[0];
         float relativeY = mouseCoords[1];
-        boardPos = new(-1, -1);
         // first, make sure on board
         if (relativeX < Screen.width / 3 || relativeX > 2 * Screen.width / 3 || relativeY < .314 * Screen.height || relativeY > .87 * Screen.height) {
+            boardPos = new Vector2Int(-1, -1);
             return false;
         }
         // find col
+        int x;
         if (relativeX < .45 * Screen.width) {
-            boardPos = new Vector2Int(boardPos[0], 0);
+            x = 0;
         } else if (relativeX < .55 * Screen.width) {
-            boardPos = new Vector2Int(boardPos[0], 1);
+            x = 1;
         } else if (relativeX < .65 * Screen.width) {
-            boardPos = new Vector2Int(boardPos[0], 2);
+            x = 2;
         } else {
-            boardPos = new Vector2Int(boardPos[0], -1);
             Debug.Log("you broke it. good job.");
+            boardPos = new Vector2Int(-1, -1);
+            return false;
         }
         // find row
+        int y;
         if (relativeY < Screen.height / 2) {
-            boardPos = new Vector2Int(2, boardPos[1]);
+            y = 2;
         } else if (relativeY < .68 * Screen.height) {
-            boardPos = new Vector2Int(1, boardPos[1]);
+            y = 1;
         } else if (relativeY < .86 * Screen.height) {
-            boardPos = new Vector2Int(0, boardPos[1]);
+            y = 0;
         } else {
-            boardPos = new Vector2Int(-1, boardPos[1]);
             Debug.Log("wow. you still broke it. i feel attacked.");
+            boardPos = new Vector2Int(-1, -1);
+            return false;
         }
-        return boardPos[0] != -1 && boardPos[1] != -1;
+
+        Debug.Assert(x != -1 && y != -1);
+        boardPos = new Vector2Int(x, y);
+        return true;
     }
 }

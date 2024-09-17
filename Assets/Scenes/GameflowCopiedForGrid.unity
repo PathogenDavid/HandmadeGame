@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 37091592}
   - component: {fileID: 37091594}
   m_Layer: 5
-  m_Name: BoardSlot20
+  m_Name: BoardSlot02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: {fileID: 400214485}
-  boardPos: {x: 2, y: 0}
+  boardPos: {x: 0, y: 2}
 --- !u!1 &78828385
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 105355154}
   - component: {fileID: 105355156}
   m_Layer: 5
-  m_Name: BoardSlot10
+  m_Name: BoardSlot01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,7 +746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: {fileID: 400214485}
-  boardPos: {x: 1, y: 0}
+  boardPos: {x: 0, y: 1}
 --- !u!1 &190791634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 722973593}
   - component: {fileID: 722973595}
   m_Layer: 5
-  m_Name: BoardSlot02
+  m_Name: BoardSlot20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1947,7 +1947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: {fileID: 400214485}
-  boardPos: {x: 0, y: 2}
+  boardPos: {x: 2, y: 0}
 --- !u!1 &726462720
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,7 +3432,7 @@ GameObject:
   - component: {fileID: 1588185200}
   - component: {fileID: 1588185202}
   m_Layer: 5
-  m_Name: BoardSlot01
+  m_Name: BoardSlot10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3508,7 +3508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: {fileID: 400214485}
-  boardPos: {x: 0, y: 1}
+  boardPos: {x: 1, y: 0}
 --- !u!1 &1600910168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3803,7 +3803,7 @@ GameObject:
   - component: {fileID: 1675806000}
   - component: {fileID: 1675806002}
   m_Layer: 5
-  m_Name: BoardSlot12
+  m_Name: BoardSlot21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3879,7 +3879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: {fileID: 400214485}
-  boardPos: {x: 1, y: 2}
+  boardPos: {x: 2, y: 1}
 --- !u!1 &1702595147
 GameObject:
   m_ObjectHideFlags: 0
@@ -4486,7 +4486,7 @@ GameObject:
   - component: {fileID: 1893078988}
   - component: {fileID: 1893078990}
   m_Layer: 5
-  m_Name: BoardSlot21
+  m_Name: BoardSlot12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4562,7 +4562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: {fileID: 400214485}
-  boardPos: {x: 2, y: 1}
+  boardPos: {x: 1, y: 2}
 --- !u!1 &1917757602
 GameObject:
   m_ObjectHideFlags: 0

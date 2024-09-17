@@ -18,12 +18,6 @@ public class ArrangementController : MonoBehaviour
 
     private Quest currentQuest;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void StartArrangementMode(Quest quest) {
         currentQuest = quest;
     }
@@ -44,11 +38,11 @@ public class ArrangementController : MonoBehaviour
         grid.SetActive(false);
     }
 
-    public bool UpdateBoardFromInv(Vector2 pos, int invPos, Image img) {
+    public bool UpdateBoardFromInv(Vector2Int pos, int invPos, Image img) {
         if (pos[0] == -1 || pos[1] == -1) return false; // invalid tile replacement
         // check if board already has something in that slot
         // if it does, move it to inventory
-        if (Board[(int)pos[0], (int)pos[1]] != 0) {
+        if (Board[pos[0], pos[1]] != 0) {
             // find first empty inventory slot
             int emptyInvIndex = -1;
             for (int i = 0; i < Inventory.Count; i++) {
@@ -58,22 +52,22 @@ public class ArrangementController : MonoBehaviour
                 }
             }
             if (emptyInvIndex == invPos) {
-                int intPos = (int)pos[1] + (3 * (int)pos[0]);
+                int intPos = pos[1] + (3 * pos[0]);
                 Image temp = Image.Instantiate(hotbar[emptyInvIndex].GetComponent<Image>());
                 hotbar[emptyInvIndex].GetComponent<Image>().color = internalDisplay[intPos].GetComponent<Image>().color;
                 int temp2 = Inventory[emptyInvIndex];
-                Inventory[emptyInvIndex] = Board[(int)pos[0], (int)pos[1]];
-                Inventory[invPos] = Board[(int)pos[0], (int)pos[1]];
-                Board[(int)pos[0], (int)pos[1]] = temp2;
+                Inventory[emptyInvIndex] = Board[pos[0], pos[1]];
+                Inventory[invPos] = Board[pos[0], pos[1]];
+                Board[pos[0], pos[1]] = temp2;
                 internalDisplay[intPos].SetActive(true);
                 internalDisplay[intPos].GetComponent<Image>().color = temp.color;
                 return true;
             } else {
                 hotbar[emptyInvIndex].SetActive(true);
-                int internalPos = (int)pos[1] + (3 * (int)pos[0]);
+                int internalPos = pos[1] + (3 * pos[0]);
                 hotbar[emptyInvIndex].GetComponent<Image>().color = internalDisplay[internalPos].GetComponent<Image>().color;
-                Inventory[emptyInvIndex] = Board[(int)pos[0], (int)pos[1]];
-                Board[(int)pos[0], (int)pos[1]] = Inventory[invPos];
+                Inventory[emptyInvIndex] = Board[pos[0], pos[1]];
+                Board[pos[0], pos[1]] = Inventory[invPos];
                 Inventory[invPos] = -1;
                 internalDisplay[internalPos].SetActive(true);
                 internalDisplay[internalPos].GetComponent<Image>().color = img.color;
@@ -81,9 +75,9 @@ public class ArrangementController : MonoBehaviour
                 return true;
             }
         } else { // otherwise, just move it
-            Board[(int)pos[0], (int)pos[1]] = Inventory[invPos];
+            Board[pos[0], pos[1]] = Inventory[invPos];
             Inventory[invPos] = -1;
-            int internalPosAgain = (int)pos[1] + (3 * (int)pos[0]);
+            int internalPosAgain = pos[1] + (3 * pos[0]);
             internalDisplay[internalPosAgain].SetActive(true);
             internalDisplay[internalPosAgain].GetComponent<Image>().color = img.color;
             hotbar[invPos].SetActive(false);
@@ -91,11 +85,11 @@ public class ArrangementController : MonoBehaviour
         }
     }
 
-    public bool UpdateBoardFromBoard(Vector2 newPos, int invPos, Vector2 curPos, Image img) {
+    public bool UpdateBoardFromBoard(Vector2Int newPos, int invPos, Vector2Int curPos, Image img) {
         if (newPos[0] == -1 || newPos[1] == -1) return false; // invalid tile replacement
         // check if board already has something in that slot
         // if it does, move it to inventory
-        if (Board[(int)newPos[0], (int)newPos[1]] != 0) {
+        if (Board[newPos[0], newPos[1]] != 0) {
             // find first empty inventory slot
             int emptyInvIndex = -1;
             for (int i = 0; i < Inventory.Count; i++) {
@@ -105,20 +99,20 @@ public class ArrangementController : MonoBehaviour
                 }
             }
             hotbar[emptyInvIndex].SetActive(true);
-            int newInternalPos = (int)newPos[1] + (3 * (int)newPos[0]);
-            int curInternalPos = (int)curPos[1] + (3 * (int)curPos[0]);
+            int newInternalPos = newPos[1] + (3 * newPos[0]);
+            int curInternalPos = curPos[1] + (3 * curPos[0]);
             hotbar[emptyInvIndex].GetComponent<Image>().color = internalDisplay[newInternalPos].GetComponent<Image>().color;
-            Inventory[emptyInvIndex] = Board[(int)newPos[0], (int)newPos[1]];
-            Board[(int)newPos[0], (int)newPos[1]] = Board[(int)curPos[0], (int)curPos[1]];
-            Board[(int)curPos[0], (int)curPos[1]] = 0;
+            Inventory[emptyInvIndex] = Board[newPos[0], newPos[1]];
+            Board[newPos[0], newPos[1]] = Board[curPos[0], curPos[1]];
+            Board[curPos[0], curPos[1]] = 0;
             internalDisplay[newInternalPos].GetComponent<Image>().color = img.color;
             internalDisplay[curInternalPos].SetActive(false);
             return true;
         } else { // otherwise, just move it
-            Board[(int)newPos[0], (int)newPos[1]] = Board[(int)curPos[0], (int)curPos[1]];
-            Board[(int)curPos[0], (int)curPos[1]] = 0;
-            int newInternalPos = (int)newPos[1] + (3 * (int)newPos[0]);
-            int curInternalPos = (int)curPos[1] + (3 * (int)curPos[0]);
+            Board[newPos[0], newPos[1]] = Board[curPos[0], curPos[1]];
+            Board[curPos[0], curPos[1]] = 0;
+            int newInternalPos = newPos[1] + (3 * newPos[0]);
+            int curInternalPos = curPos[1] + (3 * curPos[0]);
             internalDisplay[newInternalPos].SetActive(true);
             internalDisplay[newInternalPos].GetComponent<Image>().color = img.color;
             internalDisplay[curInternalPos].SetActive(false);
@@ -126,15 +120,15 @@ public class ArrangementController : MonoBehaviour
         }
     }
 
-    public bool UpdateInvFromBoard(Vector2 curPos, int invPos, Image img) {
+    public bool UpdateInvFromBoard(Vector2Int curPos, int invPos, Image img) {
         // check if inventory space is full
         if (Inventory[invPos] != -1) return false;
         // otherwise, move it to the inventory
-        Inventory[invPos] = Board[(int)curPos[0], (int)curPos[1]];
+        Inventory[invPos] = Board[curPos[0], curPos[1]];
         hotbar[invPos].SetActive(true);
         hotbar[invPos].GetComponent<Image>().color = img.color;
-        int internalPos = (int)curPos[1] + (3 * (int)curPos[0]);
-        Board[(int)curPos[0], (int)curPos[1]] = 0;
+        int internalPos = curPos[1] + (3 * curPos[0]);
+        Board[curPos[0], curPos[1]] = 0;
         internalDisplay[internalPos].SetActive(false);
         return true;
     }

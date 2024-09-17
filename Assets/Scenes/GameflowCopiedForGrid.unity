@@ -281,7 +281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &37091591
 RectTransform:
   m_ObjectHideFlags: 0
@@ -355,7 +355,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 2, y: 0}
 --- !u!1 &78828385
 GameObject:
@@ -691,7 +690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &105355153
 RectTransform:
   m_ObjectHideFlags: 0
@@ -765,7 +764,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 1, y: 0}
 --- !u!1 &190791634
 GameObject:
@@ -1903,7 +1901,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &722973592
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1977,7 +1975,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 0, y: 2}
 --- !u!1 &726462720
 GameObject:
@@ -3048,7 +3045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1181720785
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3122,7 +3119,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 1, y: 1}
 --- !u!1 &1271982229
 GameObject:
@@ -3472,7 +3468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1588185199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3546,7 +3542,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 0, y: 1}
 --- !u!1 &1600910168
 GameObject:
@@ -3847,7 +3842,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1675805999
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3921,7 +3916,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 1, y: 2}
 --- !u!1 &1702595147
 GameObject:
@@ -3941,7 +3935,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1702595148
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4015,7 +4009,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 0, y: 0}
 --- !u!1 &1708591712
 GameObject:
@@ -4361,7 +4354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1826728677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4435,7 +4428,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 2, y: 2}
 --- !u!1 &1836543077
 GameObject:
@@ -4548,7 +4540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1893078987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4622,7 +4614,6 @@ MonoBehaviour:
   normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
-  invIndex: 0
   boardPos: {x: 2, y: 1}
 --- !u!1 &1917757602
 GameObject:

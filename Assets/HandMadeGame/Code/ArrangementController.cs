@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -80,7 +79,7 @@ public class ArrangementController : MonoBehaviour
     public bool InventorySlotHasItem(int slot)
         => Inventory[slot] != null;
 
-    public bool UpdateBoardFromInv(Vector2Int pos, int invPos, Image img) {
+    public bool UpdateBoardFromInv(Vector2Int pos, int invPos) {
         if (pos[0] == -1 || pos[1] == -1)
             return false; // invalid tile replacement
         DummyItem temp = Board[pos[0], pos[1]];
@@ -90,7 +89,7 @@ public class ArrangementController : MonoBehaviour
         return true;
     }
 
-    public bool UpdateBoardFromBoard(Vector2Int newPos, int invPos, Vector2Int curPos, Image img) {
+    public bool UpdateBoardFromBoard(Vector2Int newPos, int invPos, Vector2Int curPos) {
         if (newPos[0] == -1 || newPos[1] == -1)
             return false; // invalid tile replacement
         DummyItem temp = Board[newPos[0], newPos[1]];
@@ -100,7 +99,7 @@ public class ArrangementController : MonoBehaviour
         return true;
     }
 
-    public bool UpdateInvFromBoard(Vector2Int curPos, int invPos, Image img) {
+    public bool UpdateInvFromBoard(Vector2Int curPos, int invPos) {
         DummyItem temp = Inventory[invPos];
         Inventory[invPos] = Board[curPos[0], curPos[1]];
         Board[curPos[0], curPos[1]] = temp;
@@ -108,7 +107,7 @@ public class ArrangementController : MonoBehaviour
         return true;
     }
 
-    public bool UpdateInvFromInv(int curInvPos, int newInvPos, Image img) {
+    public bool UpdateInvFromInv(int curInvPos, int newInvPos) {
         DummyItem temp = Inventory[newInvPos];
         Inventory[newInvPos] = Inventory[curInvPos];
         Inventory[curInvPos] = temp;

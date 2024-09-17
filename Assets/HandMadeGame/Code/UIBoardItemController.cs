@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class UIBoardItemController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -35,9 +34,9 @@ public class UIBoardItemController : MonoBehaviour, IPointerDownHandler, IPointe
         bool success = false;
         if (invPos == -1) { // not in inventory, check board
             Vector2Int boardLoc = ArrangementController.FindTileLocation(mouseCoords);
-            success = ac.UpdateBoardFromBoard(boardLoc, -1, boardPos, this.gameObject.GetComponent<Image>());
+            success = ac.UpdateBoardFromBoard(boardLoc, -1, boardPos);
         } else {
-            success = ac.UpdateInvFromBoard(boardPos, invPos, this.gameObject.GetComponent<Image>());
+            success = ac.UpdateInvFromBoard(boardPos, invPos);
         }
     }
 }

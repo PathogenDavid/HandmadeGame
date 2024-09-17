@@ -13,9 +13,6 @@ public class UIBoardItemController : MonoBehaviour, IPointerDownHandler, IPointe
 
     public Vector2Int boardPos;
 
-    private void Awake()
-        => gameObject.SetActive(false);
-
     public void OnPointerDown(PointerEventData pointerEventData) {
         Cursor.SetCursor(grabbyCursor, grabbyOffset, CursorMode.Auto);
     }

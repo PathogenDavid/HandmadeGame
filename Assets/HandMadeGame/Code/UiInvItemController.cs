@@ -13,16 +13,27 @@ public class UiInvItemController : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public int invIndex;
 
+    private bool IsDragging;
+
     void Start()
     {
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
     }
 
     public void OnPointerDown(PointerEventData pointerEventData) {
+        Debug.Assert(!IsDragging);
+        if (!ac.InventorySlotHasItem(invIndex))
+            return;
+
         Cursor.SetCursor(grabbyCursor, grabbyOffset, CursorMode.Auto);
+        IsDragging = true;
     }
 
     public void OnPointerUp(PointerEventData pointerEventData) {
+        if (!IsDragging)
+            return;
+
+        IsDragging = false;
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
         Vector2 mouseCoords = Input.mousePosition;
         int invPos = ArrangementController.FindInventoryLocation(mouseCoords);

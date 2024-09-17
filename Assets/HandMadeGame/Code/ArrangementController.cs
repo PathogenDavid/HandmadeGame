@@ -74,6 +74,12 @@ public class ArrangementController : MonoBehaviour
         }
     }
 
+    public bool BoardSlotHasItem(Vector2Int pos)
+        => Board[pos[0], pos[1]] != null;
+
+    public bool InventorySlotHasItem(int slot)
+        => Inventory[slot] != null;
+
     public bool UpdateBoardFromInv(Vector2Int pos, int invPos, Image img) {
         if (pos[0] == -1 || pos[1] == -1)
             return false; // invalid tile replacement

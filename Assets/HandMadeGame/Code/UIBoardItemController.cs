@@ -13,11 +13,22 @@ public class UIBoardItemController : MonoBehaviour, IPointerDownHandler, IPointe
 
     public Vector2Int boardPos;
 
+    private bool IsDragging;
+
     public void OnPointerDown(PointerEventData pointerEventData) {
+        Debug.Assert(!IsDragging);
+        if (!ac.BoardSlotHasItem(boardPos))
+            return;
+
         Cursor.SetCursor(grabbyCursor, grabbyOffset, CursorMode.Auto);
+        IsDragging = true;
     }
     
     public void OnPointerUp(PointerEventData pointerEventData) {
+        if (!IsDragging)
+            return;
+
+        IsDragging = false;
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
         Vector2 mouseCoords = Input.mousePosition;
         int invPos = ArrangementController.FindInventoryLocation(mouseCoords);

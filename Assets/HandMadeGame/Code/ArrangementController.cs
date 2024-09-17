@@ -138,4 +138,26 @@ public class ArrangementController : MonoBehaviour
         internalDisplay[internalPos].SetActive(false);
         return true;
     }
+
+    public bool UpdateInvFromInv(int curInvPos, int newInvPos, Image img) {
+        // check if inventory space is full. if so, swap items
+        if (Inventory[newInvPos] != -1) {
+            //Image temp = Image.Instantiate(hotbar[emptyInvIndex].GetComponent<Image>());
+            int tempInt = Inventory[newInvPos];
+            Inventory[newInvPos] = Inventory[curInvPos];
+            Inventory[newInvPos] = tempInt;
+            Image tempCurImage = Image.Instantiate(hotbar[curInvPos].GetComponent<Image>());
+            Image tempNewImage = Image.Instantiate(hotbar[newInvPos].GetComponent<Image>());
+            hotbar[newInvPos].GetComponent<Image>().color = tempCurImage.color;
+            hotbar[curInvPos].GetComponent<Image>().color = tempNewImage.color;
+            return true;
+        }
+        // otherwise,  just place it
+        Inventory[newInvPos] = Inventory[curInvPos];
+        hotbar[newInvPos].SetActive(true);
+        hotbar[newInvPos].GetComponent<Image>().color = img.color;
+        Inventory[curInvPos] = -1;
+        hotbar[curInvPos].SetActive(false);
+        return true;
+    }
 }

@@ -34,8 +34,14 @@ public class UiInvItemController : MonoBehaviour, IPointerDownHandler, IPointerU
     public void OnPointerUp(PointerEventData pointerEventData) {
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
         Vector2 mouseCoords = Input.mousePosition;
-        Vector2 boardLoc = FindTileLocation(mouseCoords);
-        bool success = ac.UpdateBoard(boardLoc, invIndex, this.gameObject.GetComponent<Image>());
+        int invPos = FindInventoryLocation(mouseCoords);
+        bool success = false;
+        if (invPos == -1) { // not in inventory, check board
+            Vector2 boardLoc = FindTileLocation(mouseCoords);
+            success = ac.UpdateBoardFromInv(boardLoc, invIndex, this.gameObject.GetComponent<Image>());
+        } else {
+            success = ac.UpdateInvFromInv(invIndex, invPos, this.gameObject.GetComponent<Image>());
+        }
     }
 
     private Vector2 FindTileLocation(Vector2 mouseCoords) {
@@ -67,6 +73,36 @@ public class UiInvItemController : MonoBehaviour, IPointerDownHandler, IPointerU
         } else {
             boardPos = new Vector2(-1, boardPos[1]);
             Debug.Log("wow. you still broke it. i feel attacked.");
+        }
+        return boardPos;
+    }
+
+    private int FindInventoryLocation(Vector2 mouseCoords) {
+        int boardPos = -1;
+        Debug.Log(new Vector2(mouseCoords[0], Screen.width));
+        // first, make sure on inventory
+        if (mouseCoords[0] < .15 * Screen.width || mouseCoords[0] > .85 * Screen.width || mouseCoords[1] < .08 * Screen.height || mouseCoords[1] > .18 * Screen.height) return -1;
+        if (mouseCoords[0] < .22 * Screen.width) {
+            boardPos = 0;
+        } else if (mouseCoords[0] < .3 * Screen.width) {
+            boardPos = 1;
+        } else if (mouseCoords[0] < .38 * Screen.width) {
+            boardPos = 2;
+        } else if (mouseCoords[0] < .46 * Screen.width) {
+            boardPos = 3;
+        } else if (mouseCoords[0] < .54 * Screen.width) {
+            boardPos = 4;
+        } else if (mouseCoords[0] < .62 * Screen.width) {
+            boardPos = 5;
+        } else if (mouseCoords[0] < .7 * Screen.width) {
+            boardPos = 6;
+        } else if (mouseCoords[0] < .78 * Screen.width) {
+            boardPos = 7;
+        } else if (mouseCoords[0] < .85 * Screen.width) {
+            boardPos = 8;
+        } else {
+            boardPos = -1;
+            Debug.Log("stop breaking my code >:(");
         }
         return boardPos;
     }

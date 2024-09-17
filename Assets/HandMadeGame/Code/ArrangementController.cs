@@ -44,7 +44,7 @@ public class ArrangementController : MonoBehaviour
         grid.SetActive(false);
     }
 
-    public bool UpdateBoard(Vector2 pos, int invPos, Image img) {
+    public bool UpdateBoardFromInv(Vector2 pos, int invPos, Image img) {
         if (pos[0] == -1 || pos[1] == -1) return false; // invalid tile replacement
         // check if board already has something in that slot
         // if it does, move it to inventory
@@ -80,7 +80,7 @@ public class ArrangementController : MonoBehaviour
                 hotbar[invPos].SetActive(false);
                 return true;
             }
-        } else {
+        } else { // otherwise, just move it
             Board[(int)pos[0], (int)pos[1]] = Inventory[invPos];
             Inventory[invPos] = -1;
             int internalPosAgain = (int)pos[1] + (3 * (int)pos[0]);
@@ -89,5 +89,75 @@ public class ArrangementController : MonoBehaviour
             hotbar[invPos].SetActive(false);
             return true;
         }
+    }
+
+    public bool UpdateBoardFromBoard(Vector2 newPos, int invPos, Vector2 curPos, Image img) {
+        if (newPos[0] == -1 || newPos[1] == -1) return false; // invalid tile replacement
+        // check if board already has something in that slot
+        // if it does, move it to inventory
+        if (Board[(int)newPos[0], (int)newPos[1]] != 0) {
+            // find first empty inventory slot
+            int emptyInvIndex = -1;
+            for (int i = 0; i < Inventory.Count; i++) {
+                if (i == invPos || Inventory[i] == -1) {
+                    emptyInvIndex = i;
+                    break;
+                }
+            }
+            hotbar[emptyInvIndex].SetActive(true);
+            int newInternalPos = (int)newPos[1] + (3 * (int)newPos[0]);
+            int curInternalPos = (int)curPos[1] + (3 * (int)curPos[0]);
+            hotbar[emptyInvIndex].GetComponent<Image>().color = internalDisplay[newInternalPos].GetComponent<Image>().color;
+            Inventory[emptyInvIndex] = Board[(int)newPos[0], (int)newPos[1]];
+            Board[(int)newPos[0], (int)newPos[1]] = Board[(int)curPos[0], (int)curPos[1]];
+            Board[(int)curPos[0], (int)curPos[1]] = 0;
+            internalDisplay[newInternalPos].GetComponent<Image>().color = img.color;
+            internalDisplay[curInternalPos].SetActive(false);
+            return true;
+        } else { // otherwise, just move it
+            Board[(int)newPos[0], (int)newPos[1]] = Board[(int)curPos[0], (int)curPos[1]];
+            Board[(int)curPos[0], (int)curPos[1]] = 0;
+            int newInternalPos = (int)newPos[1] + (3 * (int)newPos[0]);
+            int curInternalPos = (int)curPos[1] + (3 * (int)curPos[0]);
+            internalDisplay[newInternalPos].SetActive(true);
+            internalDisplay[newInternalPos].GetComponent<Image>().color = img.color;
+            internalDisplay[curInternalPos].SetActive(false);
+            return true;
+        }
+    }
+
+    public bool UpdateInvFromBoard(Vector2 curPos, int invPos, Image img) {
+        // check if inventory space is full
+        if (Inventory[invPos] != -1) return false;
+        // otherwise, move it to the inventory
+        Inventory[invPos] = Board[(int)curPos[0], (int)curPos[1]];
+        hotbar[invPos].SetActive(true);
+        hotbar[invPos].GetComponent<Image>().color = img.color;
+        int internalPos = (int)curPos[1] + (3 * (int)curPos[0]);
+        Board[(int)curPos[0], (int)curPos[1]] = 0;
+        internalDisplay[internalPos].SetActive(false);
+        return true;
+    }
+
+    public bool UpdateInvFromInv(int curInvPos, int newInvPos, Image img) {
+        // check if inventory space is full. if so, swap items
+        if (Inventory[newInvPos] != -1) {
+            //Image temp = Image.Instantiate(hotbar[emptyInvIndex].GetComponent<Image>());
+            int tempInt = Inventory[newInvPos];
+            Inventory[newInvPos] = Inventory[curInvPos];
+            Inventory[newInvPos] = tempInt;
+            Image tempCurImage = Image.Instantiate(hotbar[curInvPos].GetComponent<Image>());
+            Image tempNewImage = Image.Instantiate(hotbar[newInvPos].GetComponent<Image>());
+            hotbar[newInvPos].GetComponent<Image>().color = tempCurImage.color;
+            hotbar[curInvPos].GetComponent<Image>().color = tempNewImage.color;
+            return true;
+        }
+        // otherwise,  just place it
+        Inventory[newInvPos] = Inventory[curInvPos];
+        hotbar[newInvPos].SetActive(true);
+        hotbar[newInvPos].GetComponent<Image>().color = img.color;
+        Inventory[curInvPos] = -1;
+        hotbar[curInvPos].SetActive(false);
+        return true;
     }
 }

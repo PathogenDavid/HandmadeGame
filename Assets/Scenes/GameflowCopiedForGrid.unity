@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 37091591}
   - component: {fileID: 37091593}
   - component: {fileID: 37091592}
+  - component: {fileID: 37091594}
   m_Layer: 5
   m_Name: Item7 (1)
   m_TagString: Untagged
@@ -338,6 +339,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37091590}
   m_CullTransparentMesh: 1
+--- !u!114 &37091594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37091590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf1c6f0a352542498241b56d2a4d7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 400214485}
+  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
+  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
+  grabbyOffset: {x: 50, y: 0}
+  invIndex: 0
+  boardPos: {x: 2, y: 0}
 --- !u!1 &78828385
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +684,7 @@ GameObject:
   - component: {fileID: 105355153}
   - component: {fileID: 105355155}
   - component: {fileID: 105355154}
+  - component: {fileID: 105355156}
   m_Layer: 5
   m_Name: Item4 (1)
   m_TagString: Untagged
@@ -729,6 +749,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105355152}
   m_CullTransparentMesh: 1
+--- !u!114 &105355156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105355152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf1c6f0a352542498241b56d2a4d7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 400214485}
+  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
+  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
+  grabbyOffset: {x: 50, y: 0}
+  invIndex: 0
+  boardPos: {x: 1, y: 0}
 --- !u!1 &190791634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,6 +1896,7 @@ GameObject:
   - component: {fileID: 722973592}
   - component: {fileID: 722973594}
   - component: {fileID: 722973593}
+  - component: {fileID: 722973595}
   m_Layer: 5
   m_Name: Item3 (1)
   m_TagString: Untagged
@@ -1922,6 +1961,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722973591}
   m_CullTransparentMesh: 1
+--- !u!114 &722973595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722973591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf1c6f0a352542498241b56d2a4d7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 400214485}
+  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
+  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
+  grabbyOffset: {x: 50, y: 0}
+  invIndex: 0
+  boardPos: {x: 0, y: 2}
 --- !u!1 &726462720
 GameObject:
   m_ObjectHideFlags: 0
@@ -2984,6 +3041,7 @@ GameObject:
   - component: {fileID: 1181720785}
   - component: {fileID: 1181720787}
   - component: {fileID: 1181720786}
+  - component: {fileID: 1181720788}
   m_Layer: 5
   m_Name: Item5 (1)
   m_TagString: Untagged
@@ -3048,6 +3106,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181720784}
   m_CullTransparentMesh: 1
+--- !u!114 &1181720788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181720784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf1c6f0a352542498241b56d2a4d7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 400214485}
+  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
+  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
+  grabbyOffset: {x: 50, y: 0}
+  invIndex: 0
+  boardPos: {x: 1, y: 1}
 --- !u!1 &1271982229
 GameObject:
   m_ObjectHideFlags: 0
@@ -3389,6 +3465,7 @@ GameObject:
   - component: {fileID: 1588185199}
   - component: {fileID: 1588185201}
   - component: {fileID: 1588185200}
+  - component: {fileID: 1588185202}
   m_Layer: 5
   m_Name: Item2 (1)
   m_TagString: Untagged
@@ -3453,6 +3530,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588185198}
   m_CullTransparentMesh: 1
+--- !u!114 &1588185202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588185198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf1c6f0a352542498241b56d2a4d7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 400214485}
+  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
+  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
+  grabbyOffset: {x: 50, y: 0}
+  invIndex: 0
+  boardPos: {x: 0, y: 1}
 --- !u!1 &1600910168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3745,6 +3840,7 @@ GameObject:
   - component: {fileID: 1675805999}
   - component: {fileID: 1675806001}
   - component: {fileID: 1675806000}
+  - component: {fileID: 1675806002}
   m_Layer: 5
   m_Name: Item6 (1)
   m_TagString: Untagged
@@ -3809,6 +3905,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675805998}
   m_CullTransparentMesh: 1
+--- !u!114 &1675806002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675805998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf1c6f0a352542498241b56d2a4d7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 400214485}
+  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
+  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
+  grabbyOffset: {x: 50, y: 0}
+  invIndex: 0
+  boardPos: {x: 1, y: 2}
 --- !u!1 &1702595147
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +4016,7 @@ MonoBehaviour:
   grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
   grabbyOffset: {x: 50, y: 0}
   invIndex: 0
+  boardPos: {x: 0, y: 0}
 --- !u!1 &1708591712
 GameObject:
   m_ObjectHideFlags: 0
@@ -4239,6 +4354,7 @@ GameObject:
   - component: {fileID: 1826728679}
   - component: {fileID: 1826728678}
   - component: {fileID: 1826728677}
+  - component: {fileID: 1826728680}
   m_Layer: 5
   m_Name: Item9 (1)
   m_TagString: Untagged
@@ -4303,6 +4419,24 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: -100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1826728680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826728676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf1c6f0a352542498241b56d2a4d7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 400214485}
+  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
+  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
+  grabbyOffset: {x: 50, y: 0}
+  invIndex: 0
+  boardPos: {x: 2, y: 2}
 --- !u!1 &1836543077
 GameObject:
   m_ObjectHideFlags: 0
@@ -4407,6 +4541,7 @@ GameObject:
   - component: {fileID: 1893078987}
   - component: {fileID: 1893078989}
   - component: {fileID: 1893078988}
+  - component: {fileID: 1893078990}
   m_Layer: 5
   m_Name: Item8 (1)
   m_TagString: Untagged
@@ -4471,6 +4606,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893078986}
   m_CullTransparentMesh: 1
+--- !u!114 &1893078990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893078986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf1c6f0a352542498241b56d2a4d7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 400214485}
+  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
+  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
+  grabbyOffset: {x: 50, y: 0}
+  invIndex: 0
+  boardPos: {x: 2, y: 1}
 --- !u!1 &1917757602
 GameObject:
   m_ObjectHideFlags: 0

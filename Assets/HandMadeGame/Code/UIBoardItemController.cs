@@ -36,18 +36,21 @@ public class UIBoardItemController : MonoBehaviour, IPointerDownHandler, IPointe
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
         Vector2 mouseCoords = Input.mousePosition;
         int invPos = FindInventoryLocation(mouseCoords);
-        Debug.Log(invPos);
+        bool success = false;
         if (invPos == -1) { // not in inventory, check board
+            Debug.Log("noooooo");
             Vector2 boardLoc = FindTileLocation(mouseCoords);
-            Debug.Log(boardLoc);
-            bool success = ac.UpdateBoardFromBoard(boardLoc, -1, boardPos, this.gameObject.GetComponent<Image>());
+            success = ac.UpdateBoardFromBoard(boardLoc, -1, boardPos, this.gameObject.GetComponent<Image>());
+        } else {
+            success = ac.UpdateInvFromBoard(boardPos, invPos, this.gameObject.GetComponent<Image>());
         }
     }
 
     private int FindInventoryLocation(Vector2 mouseCoords) {
         int boardPos = -1;
+        Debug.Log(new Vector2(mouseCoords[0], Screen.width));
         // first, make sure on inventory
-        if (mouseCoords[0] < .15 * Screen.width || mouseCoords[0] > .85 * Screen.width || mouseCoords[1] < .8 * Screen.height || mouseCoords[1] > .15 * Screen.height) return -1;
+        if (mouseCoords[0] < .15 * Screen.width || mouseCoords[0] > .85 * Screen.width || mouseCoords[1] < .08 * Screen.height || mouseCoords[1] > .18 * Screen.height) return -1;
         if (mouseCoords[0] < .22 * Screen.width) {
             boardPos = 0;
         } else if (mouseCoords[0] < .3 * Screen.width) {

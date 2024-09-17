@@ -125,4 +125,17 @@ public class ArrangementController : MonoBehaviour
             return true;
         }
     }
+
+    public bool UpdateInvFromBoard(Vector2 curPos, int invPos, Image img) {
+        // check if inventory space is full
+        if (Inventory[invPos] != -1) return false;
+        // otherwise, move it to the inventory
+        Inventory[invPos] = Board[(int)curPos[0], (int)curPos[1]];
+        hotbar[invPos].SetActive(true);
+        hotbar[invPos].GetComponent<Image>().color = img.color;
+        int internalPos = (int)curPos[1] + (3 * (int)curPos[0]);
+        Board[(int)curPos[0], (int)curPos[1]] = 0;
+        internalDisplay[internalPos].SetActive(false);
+        return true;
+    }
 }

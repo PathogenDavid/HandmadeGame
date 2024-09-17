@@ -154,4 +154,68 @@ public class ArrangementController : MonoBehaviour
         hotbar[curInvPos].SetActive(false);
         return true;
     }
+
+    internal static int FindInventoryLocation(Vector2 mouseCoords) {
+        int boardPos = -1;
+        //Debug.Log(new Vector2(mouseCoords[0], Screen.width));
+        // first, make sure on inventory
+        if (mouseCoords[0] < .15 * Screen.width || mouseCoords[0] > .85 * Screen.width || mouseCoords[1] < .08 * Screen.height || mouseCoords[1] > .18 * Screen.height)
+            return -1;
+        if (mouseCoords[0] < .22 * Screen.width) {
+            boardPos = 0;
+        } else if (mouseCoords[0] < .3 * Screen.width) {
+            boardPos = 1;
+        } else if (mouseCoords[0] < .38 * Screen.width) {
+            boardPos = 2;
+        } else if (mouseCoords[0] < .46 * Screen.width) {
+            boardPos = 3;
+        } else if (mouseCoords[0] < .54 * Screen.width) {
+            boardPos = 4;
+        } else if (mouseCoords[0] < .62 * Screen.width) {
+            boardPos = 5;
+        } else if (mouseCoords[0] < .7 * Screen.width) {
+            boardPos = 6;
+        } else if (mouseCoords[0] < .78 * Screen.width) {
+            boardPos = 7;
+        } else if (mouseCoords[0] < .85 * Screen.width) {
+            boardPos = 8;
+        } else {
+            boardPos = -1;
+            Debug.Log("stop breaking my code >:(");
+        }
+        return boardPos;
+    }
+
+    internal static Vector2Int FindTileLocation(Vector2 mouseCoords) {
+        float relativeX = mouseCoords[0];
+        float relativeY = mouseCoords[1];
+        Vector2Int boardPos = new(-1, -1);
+        // first, make sure on board
+        if (relativeX < Screen.width / 3 || relativeX > 2 * Screen.width / 3 || relativeY < .314 * Screen.height || relativeY > .87 * Screen.height) {
+            return boardPos;
+        }
+        // find col
+        if (relativeX < .45 * Screen.width) {
+            boardPos = new Vector2Int(boardPos[0], 0);
+        } else if (relativeX < .55 * Screen.width) {
+            boardPos = new Vector2Int(boardPos[0], 1);
+        } else if (relativeX < .65 * Screen.width) {
+            boardPos = new Vector2Int(boardPos[0], 2);
+        } else {
+            boardPos = new Vector2Int(boardPos[0], -1);
+            Debug.Log("you broke it. good job.");
+        }
+        // find row
+        if (relativeY < Screen.height / 2) {
+            boardPos = new Vector2Int(2, boardPos[1]);
+        } else if (relativeY < .68 * Screen.height) {
+            boardPos = new Vector2Int(1, boardPos[1]);
+        } else if (relativeY < .86 * Screen.height) {
+            boardPos = new Vector2Int(0, boardPos[1]);
+        } else {
+            boardPos = new Vector2Int(-1, boardPos[1]);
+            Debug.Log("wow. you still broke it. i feel attacked.");
+        }
+        return boardPos;
+    }
 }

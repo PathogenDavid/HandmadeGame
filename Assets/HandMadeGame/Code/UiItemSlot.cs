@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class UiItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public abstract class UiItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public ArrangementController ac;
 
@@ -12,4 +12,10 @@ public abstract class UiItemSlot : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public void OnPointerUp(PointerEventData pointerEventData)
         => ac.EndGrab(this);
+
+    public void OnPointerEnter(PointerEventData eventData)
+        => ac.HoverStart(this);
+
+    public void OnPointerExit(PointerEventData eventData)
+        => ac.HoverEnd(this);
 }

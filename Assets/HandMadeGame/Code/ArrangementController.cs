@@ -30,6 +30,7 @@ public class ArrangementController : MonoBehaviour
     public Texture2D grabbyCursor;
     public Vector2 grabbyOffset = Vector2.zero;
     private UiItemSlot CurrentGrabTarget = null;
+    private UiItemSlot CurrentDropTarget = null;
 
     private Quest currentQuest;
 
@@ -97,6 +98,7 @@ public class ArrangementController : MonoBehaviour
         Cursor.SetCursor(grabbyCursor, grabbyOffset, CursorMode.Auto);
     }
 
+    /// <summary>Used to indicate that the specified slot was dropped after a grab</summary>
     public void EndGrab(UiItemSlot grabTarget)
     {
         // Ignore grabs not from the current slot
@@ -113,22 +115,24 @@ public class ArrangementController : MonoBehaviour
 
         ref DummyItem sourceSlot = ref grabTarget.ItemSlot;
 
-        if (FindInventoryLocation(mouseCoords, out int invPos))
+        if (CurrentDropTarget != null)
         {
-            ref DummyItem destSlot = ref GetInventoryItemSlot(invPos);
-            DummyItem temp = destSlot;
-            destSlot = sourceSlot;
-            sourceSlot = temp;
-        }
-        else if (FindTileLocation(mouseCoords, out Vector2Int boardPos))
-        {
-            ref DummyItem destSlot = ref GetBoardItemSlot(boardPos);
+            ref DummyItem destSlot = ref CurrentDropTarget.ItemSlot;
             DummyItem temp = destSlot;
             destSlot = sourceSlot;
             sourceSlot = temp;
         }
 
         SyncDisplay();
+    }
+
+    public void HoverStart(UiItemSlot slot)
+        => CurrentDropTarget = slot;
+
+    public void HoverEnd(UiItemSlot slot)
+    {
+        if (CurrentDropTarget == slot)
+            CurrentDropTarget = null;
     }
 
     private void SyncDisplay()
@@ -147,79 +151,5 @@ public class ArrangementController : MonoBehaviour
                 internalDisplay[internalDisplayIndex].GetComponent<Image>().color = Board[x, y]?.Color ?? none;
             }
         }
-    }
-
-    internal static bool FindInventoryLocation(Vector2 mouseCoords, out int boardPos) {
-        //Debug.Log(new Vector2(mouseCoords[0], Screen.width));
-        // first, make sure on inventory
-        if (mouseCoords[0] < .15 * Screen.width || mouseCoords[0] > .85 * Screen.width || mouseCoords[1] < .08 * Screen.height || mouseCoords[1] > .18 * Screen.height) {
-            boardPos = -1;
-            return false;
-        }
-
-        if (mouseCoords[0] < .22 * Screen.width) {
-            boardPos = 0;
-        } else if (mouseCoords[0] < .3 * Screen.width) {
-            boardPos = 1;
-        } else if (mouseCoords[0] < .38 * Screen.width) {
-            boardPos = 2;
-        } else if (mouseCoords[0] < .46 * Screen.width) {
-            boardPos = 3;
-        } else if (mouseCoords[0] < .54 * Screen.width) {
-            boardPos = 4;
-        } else if (mouseCoords[0] < .62 * Screen.width) {
-            boardPos = 5;
-        } else if (mouseCoords[0] < .7 * Screen.width) {
-            boardPos = 6;
-        } else if (mouseCoords[0] < .78 * Screen.width) {
-            boardPos = 7;
-        } else if (mouseCoords[0] < .85 * Screen.width) {
-            boardPos = 8;
-        } else {
-            boardPos = -1;
-            Debug.Log("stop breaking my code >:(");
-            return false;
-        }
-        return true;
-    }
-
-    internal static bool FindTileLocation(Vector2 mouseCoords, out Vector2Int boardPos) {
-        float relativeX = mouseCoords[0];
-        float relativeY = mouseCoords[1];
-        // first, make sure on board
-        if (relativeX < Screen.width / 3 || relativeX > 2 * Screen.width / 3 || relativeY < .314 * Screen.height || relativeY > .87 * Screen.height) {
-            boardPos = new Vector2Int(-1, -1);
-            return false;
-        }
-        // find col
-        int x;
-        if (relativeX < .45 * Screen.width) {
-            x = 0;
-        } else if (relativeX < .55 * Screen.width) {
-            x = 1;
-        } else if (relativeX < .65 * Screen.width) {
-            x = 2;
-        } else {
-            Debug.Log("you broke it. good job.");
-            boardPos = new Vector2Int(-1, -1);
-            return false;
-        }
-        // find row
-        int y;
-        if (relativeY < Screen.height / 2) {
-            y = 2;
-        } else if (relativeY < .68 * Screen.height) {
-            y = 1;
-        } else if (relativeY < .86 * Screen.height) {
-            y = 0;
-        } else {
-            Debug.Log("wow. you still broke it. i feel attacked.");
-            boardPos = new Vector2Int(-1, -1);
-            return false;
-        }
-
-        Debug.Assert(x != -1 && y != -1);
-        boardPos = new Vector2Int(x, y);
-        return true;
     }
 }

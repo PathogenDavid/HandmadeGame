@@ -19,6 +19,8 @@ public sealed class DialogueController : MonoBehaviour
     private string RemainingText;
     private bool ShowButtonsForFinalText;
 
+    public InventoryHotBarController InventoryHotBar;
+
     private static Action NoOp = () => { };
 
     private void Awake()
@@ -57,6 +59,7 @@ public sealed class DialogueController : MonoBehaviour
         if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);
+            InventoryHotBar.Hide();
             UiController.StartUiInteraction();
         }
     }
@@ -94,6 +97,7 @@ public sealed class DialogueController : MonoBehaviour
         if (!_DialogueWasJustShown)
         {
             gameObject.SetActive(false);
+            InventoryHotBar.Show();
             UiController.EndUiInteraction();
         }
     }

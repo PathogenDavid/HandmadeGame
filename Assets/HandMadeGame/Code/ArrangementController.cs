@@ -1,91 +1,99 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ArrangementController : MonoBehaviour
+public sealed class ArrangementController : ArrangementModeControllerBase
 {
-    public class DummyItem
-    {
-        public readonly Color Color;
+    private GameFlow GameFlow => GameFlow.Instance;
 
-        public DummyItem(Color color)
-            => Color = color;
-    }
+    public Camera MainCamera;
+    public Camera ArrangementModeCamera;
 
-    public GameObject inventory;
-    public GameObject grid;
+    public ControllerPrompt ControllerPrompt;
 
-    private DummyItem[,] Board = new DummyItem[3,3];
-    public List<GameObject> internalDisplay = new(); // BoardObjects
-    public readonly int BoardWidth = 3;
-    public readonly int BoardHeight = 3;
-    
-    private DummyItem[] Inventory = new DummyItem[9];
-    public List<GameObject> hotbar = new List<GameObject>(9); // InventoryObjects
+    public GameObject GridVisuals;
 
-    private Color[] Colors;
+    public UiItemSlot[] ItemSlots;
 
     public Texture2D normalCursor;
     public Texture2D grabbyCursor;
     public Vector2 grabbyOffset = Vector2.zero;
+
     private UiItemSlot CurrentGrabTarget = null;
     private UiItemSlot CurrentDropTarget = null;
 
-    private Quest currentQuest;
+    private Quest CurrentQuest;
+    public bool IsActive => CurrentQuest != null;
 
     private void Awake()
     {
-        for (int i = 0; i < hotbar.Count; i++)
-            Inventory[i] = new(hotbar[i].GetComponent<Image>().color);
+        foreach (UiItemSlot itemSlot in ItemSlots)
+        {
+            itemSlot.Controller = this;
+            itemSlot.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
+        }
 
-        SyncDisplay();
+        GridVisuals.SetActive(false);
+        ArrangementModeCamera.gameObject.SetActive(false);
     }
 
-    void Start()
+    public override void StartArrangementMode(Quest quest)
     {
+        Debug.Assert(CurrentQuest == null);
+        CurrentQuest = quest;
+        UiController.StartUiInteraction();
+        GridVisuals.SetActive(true);
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
+        ControllerPrompt.Show(UiController.InteractionKey, "Finish");
+        MainCamera.gameObject.SetActive(false);
+        ArrangementModeCamera.gameObject.SetActive(true);
     }
 
-    public void StartArrangementMode(Quest quest) {
-        currentQuest = quest;
-    }
-
-    private void ShowInventory() {
-        inventory.SetActive(true);
-    }
-
-    private void HideInventory() {
-        inventory.SetActive(false);
-    }
-
-    private void ShowGrid() {
-        grid.SetActive(true);
-    }
-    
-    private void HideGrid() {
-        grid.SetActive(false);
-    }
-
-    public ref DummyItem GetBoardItemSlot(Vector2Int pos)
+    private void EndArrangementMode()
     {
-        if (pos.x < 0 || pos.x >= BoardWidth || pos.y < 0 || pos.y >= BoardHeight)
+        Debug.Assert(CurrentQuest != null);
+        ControllerPrompt.Hide();
+        CurrentGrabTarget = null;
+        CurrentDropTarget = null;
+        GridVisuals.SetActive(false);
+        UiController.EndUiInteraction();
+        ArrangementModeCamera.gameObject.SetActive(false);
+        MainCamera.gameObject.SetActive(true);
+        GameFlow.EndArrangementMode(CurrentQuest);
+        CurrentQuest = null;
+    }
+
+    private void Update()
+    {
+        if (CurrentQuest != null && UiController.CheckGlobalDismiss(clickToDismiss: false))
+            EndArrangementMode();
+    }
+
+    public ref NestItem GetBoardItemSlot(Vector2Int pos)
+    {
+        if (pos.x < 0 || pos.x >= CurrentQuest.BoardWidth || pos.y < 0 || pos.y >= CurrentQuest.BoardHeight)
             throw new ArgumentOutOfRangeException(nameof(pos));
 
-        return ref Board[pos.x, pos.y];
+        return ref CurrentQuest.Board[pos.x, pos.y];
     }
 
-    public ref DummyItem GetInventoryItemSlot(int slot)
+    public ref NestItem GetInventoryItemSlot(int slot)
     {
-        if (slot < 0 || slot >= Inventory.Length)
+        if (slot < 0 || slot >= GameFlow.Inventory.Length)
             throw new ArgumentOutOfRangeException(nameof(slot));
 
-        return ref Inventory[slot];
+        return ref GameFlow.Inventory[slot];
     }
 
     /// <summary>Used to indicate that the specified slot wants to be grabbed</summary>
     public void StartGrab(UiItemSlot grabTarget)
     {
+        if (CurrentQuest == null)
+        {
+            Debug.LogWarning("Tried to start grab when arrangement mode is inactive!");
+            return;
+        }
+
         // It shouldn't be possible for a grab to start while another is active
         Debug.Assert(CurrentGrabTarget == null);
         CurrentGrabTarget = null;
@@ -101,6 +109,12 @@ public class ArrangementController : MonoBehaviour
     /// <summary>Used to indicate that the specified slot was dropped after a grab</summary>
     public void EndGrab(UiItemSlot grabTarget)
     {
+        if (CurrentQuest == null)
+        {
+            Debug.LogWarning("Tried to end grab when arrangement mode is inactive!");
+            return;
+        }
+
         // Ignore grabs not from the current slot
         // (Generally means an empty slot is being grabbed)
         if (grabTarget != CurrentGrabTarget)
@@ -113,17 +127,15 @@ public class ArrangementController : MonoBehaviour
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
         Vector2 mouseCoords = Input.mousePosition;
 
-        ref DummyItem sourceSlot = ref grabTarget.ItemSlot;
+        ref NestItem sourceSlot = ref grabTarget.ItemSlot;
 
         if (CurrentDropTarget != null)
         {
-            ref DummyItem destSlot = ref CurrentDropTarget.ItemSlot;
-            DummyItem temp = destSlot;
+            ref NestItem destSlot = ref CurrentDropTarget.ItemSlot;
+            NestItem temp = destSlot;
             destSlot = sourceSlot;
             sourceSlot = temp;
         }
-
-        SyncDisplay();
     }
 
     public void HoverStart(UiItemSlot slot)
@@ -133,23 +145,5 @@ public class ArrangementController : MonoBehaviour
     {
         if (CurrentDropTarget == slot)
             CurrentDropTarget = null;
-    }
-
-    private void SyncDisplay()
-    {
-        Color none = new(0f, 0f, 0f, 0f);
-
-        Debug.Assert(Inventory.Length == hotbar.Count);
-        for (int i = 0; i < hotbar.Count; i++)
-            hotbar[i].GetComponent<Image>().color = Inventory[i]?.Color ?? none;
-
-        for (int y = 0; y < BoardHeight; y++)
-        {
-            for (int x = 0; x < BoardWidth; x++)
-            {
-                int internalDisplayIndex = x + (BoardHeight * y);
-                internalDisplay[internalDisplayIndex].GetComponent<Image>().color = Board[x, y]?.Color ?? none;
-            }
-        }
     }
 }

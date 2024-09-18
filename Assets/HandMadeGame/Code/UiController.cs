@@ -29,11 +29,11 @@ public static class UiController
             UiInteractionEnd?.Invoke();
     }
 
-    public static bool CheckGlobalDismiss()
+    public static bool CheckGlobalDismiss(bool clickToDismiss = true)
         => Input.GetKeyDown(KeyCode.Space)
         || Input.GetKeyDown(KeyCode.Return)
         || Input.GetKeyDown(KeyCode.Escape)
-        || Input.GetMouseButtonDown(0)
+        || (clickToDismiss && Input.GetMouseButtonDown(0))
         || Input.GetKeyDown(InteractionKey);
 
     public static string ProcessDisplayString(string text)

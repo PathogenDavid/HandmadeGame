@@ -3,19 +3,19 @@ using UnityEngine.EventSystems;
 
 public abstract class UiItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public ArrangementController ac;
+    public ArrangementController Controller;
 
-    public abstract ref ArrangementController.DummyItem ItemSlot { get; }
+    public abstract ref NestItem ItemSlot { get; }
 
     public void OnPointerDown(PointerEventData pointerEventData)
-        => ac.StartGrab(this);
+        => Controller.StartGrab(this);
 
     public void OnPointerUp(PointerEventData pointerEventData)
-        => ac.EndGrab(this);
+        => Controller.EndGrab(this);
 
     public void OnPointerEnter(PointerEventData eventData)
-        => ac.HoverStart(this);
+        => Controller.HoverStart(this);
 
     public void OnPointerExit(PointerEventData eventData)
-        => ac.HoverEnd(this);
+        => Controller.HoverEnd(this);
 }

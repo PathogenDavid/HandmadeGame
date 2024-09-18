@@ -29,6 +29,18 @@ public sealed class InventoryHotBarController : MonoBehaviour
         Debug.Assert(InventorySlots.Length == GameFlow.Inventory.Length, $"{nameof(InventoryHotBarController)} does not have the same number of slots as {nameof(GameFlow)}!");
     }
 
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        OverlayImage.gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+        OverlayImage.gameObject.SetActive(false);
+    }
+
     private HashSet<NestItem> _VisibleItems = new();
     private Vector3[] _Corners = new Vector3[4];
     private void Update()

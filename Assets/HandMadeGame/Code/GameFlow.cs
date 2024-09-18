@@ -4,7 +4,17 @@ using UnityEngine;
 
 public sealed class GameFlow : MonoBehaviour
 {
-    public static GameFlow Instance { get; private set; }
+    private static GameFlow _Instance;
+    public static GameFlow Instance
+    {
+        get
+        {
+            if (_Instance is not null)
+                return _Instance;
+
+            return _Instance = FindObjectOfType<GameFlow>();
+        }
+    }
 
     [NonSerialized] public List<NestItem> AllNestItems = new();
 
@@ -24,14 +34,12 @@ public sealed class GameFlow : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != this)
         {
             Debug.LogError($"Multiple {nameof(GameFlow)} instances exist in the scene!");
             Destroy(this);
             return;
         }
-
-        Instance = this;
     }
 
     public void HandleInteraction(Quest quest)
@@ -167,12 +175,6 @@ public sealed class GameFlow : MonoBehaviour
                 "<size=130%><<em>Expert Interior Birdecorator</em>></size>\n\n" +
                 "Thanks for playing!"
             );
-    }
-
-    private void OnDestroy()
-    {
-        if (Instance == this)
-            Instance = null;
     }
 
     private void OnGUI()

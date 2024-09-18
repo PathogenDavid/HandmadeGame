@@ -71,6 +71,7 @@ MonoBehaviour:
   IsChristmasTree: 1
   IsGarbage: 0
   IsSoft: 0
+  InventoryItemScale: 0.7
 --- !u!1001 &5698290468361932906
 PrefabInstance:
   m_ObjectHideFlags: 0

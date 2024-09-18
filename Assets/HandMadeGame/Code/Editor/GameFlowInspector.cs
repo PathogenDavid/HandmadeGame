@@ -10,8 +10,8 @@ public sealed class GameFlowInspector : Editor
         base.OnInspectorGUI();
 
         EditorGUILayout.Separator();
-        EditorGUILayout.LabelField($"Inventory contains {target.Inventory.Count} items");
+        EditorGUILayout.LabelField("Inventory slots:");
         foreach (NestItem item in target.Inventory)
-            EditorGUILayout.LabelField($"* {item.name}");
+            EditorGUILayout.LabelField($"* {(item != null ? item.name : "<empty>")}");
     }
 }

@@ -6,8 +6,11 @@ public sealed class GameFlow : MonoBehaviour
 {
     public static GameFlow Instance { get; private set; }
 
-    [HideInInspector]
-    public List<NestItem> Inventory = new();
+    [NonSerialized] public List<NestItem> AllNestItems = new();
+
+    public const int InventorySize = 9;
+    [NonSerialized] public NestItem[] Inventory = new NestItem[InventorySize];
+
     public int Reputation;
     public int WinReputation = 3;
 
@@ -112,8 +115,18 @@ public sealed class GameFlow : MonoBehaviour
 
     public void HandleInteraction(NestItem item)
     {
-        Inventory.Add(item);
-        item.gameObject.SetActive(false);
+        for (int i = 0; i < Inventory.Length; i++)
+        {
+            if (Inventory[i] == null)
+            {
+                Inventory[i] = item;
+                item.gameObject.SetActive(false);
+                return;
+            }
+        }
+
+        Debug.LogWarning($"Can't pick up '{item}', inventory is full!");
+        //TODO: Tell the player that the inventory is full
     }
 
     public void EndArrangementMode(Quest quest)

@@ -25,36 +25,26 @@ public sealed class SuperSketchyTemporaryArrangementModeController : Arrangement
         GUILayout.Space(10f);
         GUILayout.Label("== Inventory ==");
 
-        NestItem putBack = null;
-        NestItem removeItem = null;
-        foreach (NestItem item in GameFlow.Instance.Inventory)
+        for (int i = 0; i < GameFlow.Instance.Inventory.Length; i++)
         {
-            if (GUILayout.Button(item.name))
+            NestItem item = GameFlow.Instance.Inventory[i];
+            if (item == null)
             {
-                if (CurrentNestItem != null)
+                if (CurrentNestItem == null)
                 {
-                    Debug.Assert(putBack == null);
-                    Debug.Assert(removeItem == null);
-                    putBack = CurrentNestItem;
+                    GUILayout.Button("");
                 }
-
-                CurrentNestItem = removeItem = item;
+                else if (GUILayout.Button($"Put {CurrentNestItem.name} back"))
+                {
+                    GameFlow.Instance.Inventory[i] = CurrentNestItem;
+                    CurrentNestItem = null;
+                }
             }
-        }
-
-        if (putBack != null)
-            GameFlow.Instance.Inventory.Add(putBack);
-
-        if (removeItem != null)
-            GameFlow.Instance.Inventory.Remove(removeItem);
-
-        if (CurrentNestItem != null)
-        {
-            GUILayout.Space(10f);
-            if (GUILayout.Button($"Put {CurrentNestItem.name} back"))
+            else if (GUILayout.Button(item.name))
             {
-                GameFlow.Instance.Inventory.Add(CurrentNestItem);
-                CurrentNestItem = null;
+                NestItem temp = CurrentNestItem;
+                CurrentNestItem = item;
+                GameFlow.Instance.Inventory[i] = temp;
             }
         }
 
@@ -78,13 +68,13 @@ public sealed class SuperSketchyTemporaryArrangementModeController : Arrangement
             }
         }
 
-        if (GUI.Button(new Rect(left, top + 3 * h, w * 3, 30f), "Exit"))
+        if (CurrentNestItem == null && GUI.Button(new Rect(left, top + 3 * h, w * 3, 30f), "Exit"))
         {
-            if (CurrentNestItem != null)
-            {
-                GameFlow.Instance.Inventory.Add(CurrentNestItem);
-                CurrentNestItem = null;
-            }
+            //if (CurrentNestItem != null)
+            //{
+            //    GameFlow.Instance.Inventory.Add(CurrentNestItem);
+            //    CurrentNestItem = null;
+            //}
 
             GameFlow.Instance.EndArrangementMode(Target);
             Target = null;

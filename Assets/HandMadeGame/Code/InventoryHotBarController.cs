@@ -13,6 +13,9 @@ public sealed class InventoryHotBarController : MonoBehaviour
 
     public RectTransform[] InventorySlots;
 
+    public float SpinAngle = 0f;
+    public float SpinSpeed = 50f;
+
     private RenderTexture OverlayTexture
     {
         get => OverlayCamera.targetTexture;
@@ -43,6 +46,9 @@ public sealed class InventoryHotBarController : MonoBehaviour
         }
 
         // Update inventory item visuals
+        SpinAngle += Time.deltaTime * SpinSpeed;
+        Quaternion rotation = Quaternion.Euler(0f, 180f, -20f) * Quaternion.AngleAxis(SpinAngle, Vector3.up);
+
         _VisibleItems.Clear();
         for (int i = 0; i < GameFlow.Inventory.Length; i++)
         {
@@ -57,6 +63,7 @@ public sealed class InventoryHotBarController : MonoBehaviour
             Vector3 screenPosition = new(center.x, center.y, OverlayItemDepth);
             GameObject inventoryShadow = item.InventoryItemShadowObject;
             inventoryShadow.transform.position = OverlayCamera.ScreenToWorldPoint(screenPosition);
+            inventoryShadow.transform.rotation = rotation;
             inventoryShadow.SetActive(true);
             _VisibleItems.Add(item);
         }

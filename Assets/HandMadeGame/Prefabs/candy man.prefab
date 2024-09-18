@@ -71,6 +71,7 @@ MonoBehaviour:
   IsChristmasTree: 0
   IsGarbage: 0
   IsSoft: 0
+  InventoryItemScale: 1
 --- !u!1001 &3588551526713087993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,27 +98,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8fb766ea761924f409a0ae6c5f397172,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000021855696
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8fb766ea761924f409a0ae6c5f397172,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8fb766ea761924f409a0ae6c5f397172,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000001490116
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8fb766ea761924f409a0ae6c5f397172,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000003774895
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8fb766ea761924f409a0ae6c5f397172,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8fb766ea761924f409a0ae6c5f397172,
         type: 3}

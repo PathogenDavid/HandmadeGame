@@ -23,7 +23,6 @@ public sealed class NestItem : MonoBehaviour
         shadowObject.transform.parent = inventoryObjectOverlayItems.transform;
         shadowObject.transform.localScale = new Vector3(InventoryItemScale, InventoryItemScale, InventoryItemScale);
         shadowObject.layer = inventoryObjectOverlayItems.layer;
-        shadowObject.AddComponent<InventoryNestItem>();
 
         for (int i = 0; i < transform.childCount; i++)
         {

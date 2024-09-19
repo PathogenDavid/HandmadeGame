@@ -6,7 +6,7 @@ public class BackgroundMusicTest : MonoBehaviour
 
     void Start()
     {
-        Audio.SetAudioVolume(7);
+        Audio.SetMusicVolume(7);
         Audio.PlayMusic(Music, 0f);
     }
 }

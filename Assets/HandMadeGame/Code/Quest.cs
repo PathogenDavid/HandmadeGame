@@ -4,8 +4,8 @@ public sealed class Quest : MonoBehaviour
 {
     public Sprite CharacterPortrait;
     public int RequiredReputation;
-  public AudioClip CharacterMusic;
-  public AudioClip[] CharacterTalkSounds;
+    public AudioClip CharacterMusic;
+    public AudioClip[] CharacterTalkSounds;
 
     [Header("Quest Logistics")]
     [Multiline] public string StartDialogue = "HELLO YES I WOULD LIKE SOME DECORATION";
@@ -57,8 +57,8 @@ public sealed class Quest : MonoBehaviour
             gameObject.SetActive(false);
     }
 
-  public AudioClip GetRandomTalkSound()
-  {
-    return CharacterTalkSounds[UnityEngine.Random.Range(0, CharacterTalkSounds.Length)];
-  }
+    public AudioClip GetRandomTalkSound()
+    {
+        return CharacterTalkSounds[UnityEngine.Random.Range(0, CharacterTalkSounds.Length)];
+    }
 }

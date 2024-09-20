@@ -3,19 +3,36 @@ using UnityEngine;
 
 public class Audio : MonoBehaviour
 {
-    public static Audio Singleton;
+    private static Audio _Singleton;
+    public static Audio Singleton
+    {
+        get
+        {
+            if (_Singleton is not null)
+                return _Singleton;
+
+            return _Singleton = FindObjectOfType<Audio>();
+        }
+    }
+
+
     private float MusicVolume = 0;
     private float SFXVolume = 0;
     private AudioSource[] MusicSources;
     private AudioSource SfxSource, SfxSourcePitched;
     private int ActiveMusicSourceIndex;
     private bool MusicCrossfadeActive;
-  private bool QueueVolumeLock = false;
-  private float QueueCrossoverTime;
+    private bool QueueVolumeLock = false;
+    private float QueueCrossoverTime;
 
     private void Awake()
     {
-        Singleton = this;
+        if (Singleton != this)
+        {
+            Debug.LogError($"Multiple {nameof(Audio)} instances exist in the scene!");
+            Destroy(this);
+            return;
+        }
 
         // Create two music audio sources, this will allow the script to cross-fade between two songs
         MusicSources = new AudioSource[2];
@@ -40,41 +57,41 @@ public class Audio : MonoBehaviour
         NewSfxSourcePitched.transform.parent = transform;
     }
 
-  // This will force stop all sound effects
-  public void StopAllSFX() => SfxSource.Stop();
+    // This will force stop all sound effects
+    public void StopAllSFX() => SfxSource.Stop();
 
     public void StopMusic(float _fade = 0)
     {
         ActiveMusicSourceIndex = 1 - ActiveMusicSourceIndex;
         StartCoroutine(AnimateMusicCrossfade(_fade));
-  }
-
-  public static void SetMusicVolume(int Vol) => Audio.Singleton.SetMusicVolumeSingle(Vol);
-  public void SetMusicVolumeSingle(int Vol)
-  {
-    Vol = Mathf.Clamp(Vol, 0, 10);
-    MusicVolume = (float)Vol / 10;
-    if (!MusicCrossfadeActive)
-    {
-      MusicSources[ActiveMusicSourceIndex].volume = MusicVolume;
-      MusicSources[1 - ActiveMusicSourceIndex].volume = 0;
     }
-  }
 
-  public static void SetSFXVolume(int Vol) => Audio.Singleton.SetSFXVolumeSingle(Vol);
-  public void SetSFXVolumeSingle(int Vol)
-  {
-    Vol = Mathf.Clamp(Vol, 0, 10);
-    MusicVolume = (float)Vol / 10;
-    if (!MusicCrossfadeActive)
+    public static void SetMusicVolume(int Vol) => Audio.Singleton.SetMusicVolumeSingle(Vol);
+    public void SetMusicVolumeSingle(int Vol)
     {
-      MusicSources[ActiveMusicSourceIndex].volume = MusicVolume;
-      MusicSources[1 - ActiveMusicSourceIndex].volume = 0;
+        Vol = Mathf.Clamp(Vol, 0, 10);
+        MusicVolume = (float)Vol / 10;
+        if (!MusicCrossfadeActive)
+        {
+            MusicSources[ActiveMusicSourceIndex].volume = MusicVolume;
+            MusicSources[1 - ActiveMusicSourceIndex].volume = 0;
+        }
     }
-  }
 
-  // Returns the currently playing song
-  public static AudioClip CurrentSong() { return Audio.Singleton.CurrentSongSingle(); }
+    public static void SetSFXVolume(int Vol) => Audio.Singleton.SetSFXVolumeSingle(Vol);
+    public void SetSFXVolumeSingle(int Vol)
+    {
+        Vol = Mathf.Clamp(Vol, 0, 10);
+        MusicVolume = (float)Vol / 10;
+        if (!MusicCrossfadeActive)
+        {
+            MusicSources[ActiveMusicSourceIndex].volume = MusicVolume;
+            MusicSources[1 - ActiveMusicSourceIndex].volume = 0;
+        }
+    }
+
+    // Returns the currently playing song
+    public static AudioClip CurrentSong() { return Audio.Singleton.CurrentSongSingle(); }
     public AudioClip CurrentSongSingle() { return MusicSources[ActiveMusicSourceIndex].clip; }
     public float CurrentSongPosition() { return MusicSources[ActiveMusicSourceIndex].time; }
     public void PauseCurrentSong() { MusicSources[ActiveMusicSourceIndex].Pause(); }
@@ -83,12 +100,12 @@ public class Audio : MonoBehaviour
     public static void QueueNextSong(AudioClip _clip) => Audio.Singleton.QueueNextSongSingle(_clip);
     public void QueueNextSongSingle(AudioClip _clip)
     {
-      QueueVolumeLock = true;
-    MusicSources[ActiveMusicSourceIndex].loop = false;
-    QueueCrossoverTime = Time.time + MusicSources[ActiveMusicSourceIndex].clip.length;
-    MusicSources[1 - ActiveMusicSourceIndex].clip = _clip;
-      MusicSources[1 - ActiveMusicSourceIndex].PlayDelayed(MusicSources[ActiveMusicSourceIndex].clip.length - 0.06f); // Hard coded time to take into account song loading? It works OK enough
-      MusicSources[1 - ActiveMusicSourceIndex].volume = MusicVolume;
+        QueueVolumeLock = true;
+        MusicSources[ActiveMusicSourceIndex].loop = false;
+        QueueCrossoverTime = Time.time + MusicSources[ActiveMusicSourceIndex].clip.length;
+        MusicSources[1 - ActiveMusicSourceIndex].clip = _clip;
+        MusicSources[1 - ActiveMusicSourceIndex].PlayDelayed(MusicSources[ActiveMusicSourceIndex].clip.length - 0.06f); // Hard coded time to take into account song loading? It works OK enough
+        MusicSources[1 - ActiveMusicSourceIndex].volume = MusicVolume;
     }
 
     // This will load the referenced AudioClip and crossfade between them.
@@ -98,26 +115,27 @@ public class Audio : MonoBehaviour
     public void PlayMusicSingle(AudioClip _clip, float _fade = 1)
     {
 
-      // This generates two new gameobjects and attaches an AudioSource component to it
-      for (int i = 0; i < 2; i++)
-      {
-        MusicSources[i].loop = true;
-    }
-    if (QueueVolumeLock)
-    {
-      QueueVolumeLock = false;
-      if (QueueCrossoverTime < Time.time)
-      {
-        ActiveMusicSourceIndex = 1 - ActiveMusicSourceIndex;
-        MusicSources[ActiveMusicSourceIndex].volume = 0;
-      } else
-      {
-        MusicSources[1-ActiveMusicSourceIndex].volume = 0;
-      }
-    }
+        // This generates two new gameobjects and attaches an AudioSource component to it
+        for (int i = 0; i < 2; i++)
+        {
+            MusicSources[i].loop = true;
+        }
+        if (QueueVolumeLock)
+        {
+            QueueVolumeLock = false;
+            if (QueueCrossoverTime < Time.time)
+            {
+                ActiveMusicSourceIndex = 1 - ActiveMusicSourceIndex;
+                MusicSources[ActiveMusicSourceIndex].volume = 0;
+            }
+            else
+            {
+                MusicSources[1 - ActiveMusicSourceIndex].volume = 0;
+            }
+        }
 
-    // If the requested audio is different from the currently playing audio, start fade
-    if (MusicSources[ActiveMusicSourceIndex].clip != _clip)
+        // If the requested audio is different from the currently playing audio, start fade
+        if (MusicSources[ActiveMusicSourceIndex].clip != _clip)
         {
             ActiveMusicSourceIndex = 1 - ActiveMusicSourceIndex;
             MusicSources[ActiveMusicSourceIndex].clip = _clip;
@@ -163,17 +181,18 @@ public class Audio : MonoBehaviour
             MusicSources[ActiveMusicSourceIndex].volume = Mathf.Lerp(0, MusicVolume, Percent);
             if (!QueueVolumeLock)
             {
-              MusicSources[1 - ActiveMusicSourceIndex].volume = Mathf.Lerp(MusicVolume, 0, Percent);
-            } else
+                MusicSources[1 - ActiveMusicSourceIndex].volume = Mathf.Lerp(MusicVolume, 0, Percent);
+            }
+            else
             {
-              MusicSources[1 - ActiveMusicSourceIndex].volume = MusicVolume;
+                MusicSources[1 - ActiveMusicSourceIndex].volume = MusicVolume;
             }
             yield return new WaitForFixedUpdate();
         }
         MusicCrossfadeActive = false;
-      if (!QueueVolumeLock)
-      {
-        MusicSources[1 - ActiveMusicSourceIndex].Stop();
-      }
+        if (!QueueVolumeLock)
+        {
+            MusicSources[1 - ActiveMusicSourceIndex].Stop();
+        }
     }
 }

@@ -25,6 +25,9 @@ public sealed class ArrangementController : ArrangementModeControllerBase
     private Quest CurrentQuest;
     public bool IsActive => CurrentQuest != null;
 
+    public AudioClip PickUpSound;
+    public AudioClip PlaceDownSound;
+
     private void Awake()
     {
         foreach (UiItemSlot itemSlot in ItemSlots)
@@ -105,6 +108,7 @@ public sealed class ArrangementController : ArrangementModeControllerBase
 
         CurrentGrabTarget = grabTarget;
         Cursor.SetCursor(grabbyCursor, grabbyOffset, CursorMode.Auto);
+        SoundEffectsController.Instance.PlayUiSound(PickUpSound);
     }
 
     /// <summary>Used to indicate that the specified slot was dropped after a grab</summary>
@@ -136,6 +140,7 @@ public sealed class ArrangementController : ArrangementModeControllerBase
             NestItem temp = destSlot;
             destSlot = sourceSlot;
             sourceSlot = temp;
+            SoundEffectsController.Instance.PlayUiSound(CurrentDropTarget is UiInvItemController ? PlaceDownSound : PickUpSound);
         }
     }
 

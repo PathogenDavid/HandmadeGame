@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +16,8 @@ public sealed class DialogueController : MonoBehaviour
     private Action AdvanceAction;
     private bool ButtonsAreVisible = false;
 
+    public AudioClip ButtonClickSound;
+
     private string RemainingText;
     private bool ShowButtonsForFinalText;
 
@@ -28,8 +30,17 @@ public sealed class DialogueController : MonoBehaviour
 
     private void Start()
     {
-        YesButton.onClick.AddListener(() => HandleAction(YesAction));
-        NoButton.onClick.AddListener(() => HandleAction(NoAction));
+        YesButton.onClick.AddListener(() =>
+        {
+            SoundEffectsController.Instance.PlayUiSound(ButtonClickSound);
+            HandleAction(YesAction);
+        });
+
+        NoButton.onClick.AddListener(() =>
+        {
+            SoundEffectsController.Instance.PlayUiSound(ButtonClickSound);
+            HandleAction(NoAction);
+        });
     }
 
     private bool _DialogueWasJustShown = false;

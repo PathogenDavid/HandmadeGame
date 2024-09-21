@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +7,8 @@ public sealed class InfoPopupController : MonoBehaviour
     public TMP_Text Text;
     public ControllerPrompt ControllerPrompt;
     private Action DismissAction;
+
+    public AudioClip DismissSound;
 
     private static Action NoOp = () => { };
 
@@ -34,6 +36,7 @@ public sealed class InfoPopupController : MonoBehaviour
                 ControllerPrompt.Hide();
                 gameObject.SetActive(false);
                 UiController.EndUiInteraction();
+                SoundEffectsController.Instance.PlayUiSound(DismissSound);
                 DismissAction();
             }
         }

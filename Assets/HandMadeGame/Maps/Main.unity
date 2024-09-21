@@ -2948,10 +2948,10 @@ MonoBehaviour:
   CharacterMusic: {fileID: 8300000, guid: ae83df44e8db840448aa2a59db2ee3cd, type: 3}
   CharacterTalkSounds: []
   StartDialogue: "Hello! Are you the new Birdecorator in the park? Goodness, I am
-    SO glad you stopped by my nest! My partner is at the OGBRD right now for a check-up\u2026I 
+    SO glad you stopped by my nest! My partner is at the OGBRD right now for a check-up\u2026\r\n###\r\nI
     thought it might be nice to surprise her by having the nursery set up when she
     gets back! The thing is\u2026I\u2019m not really any good at decorating and I
-    want it to look nice. Do you think you can help me?"
+    want it to look nice.\r\n###\r\nDo you think you can help me?"
   QuestAcceptedDialogue: "That\u2019s great! Really great! Okay, what we need is
     <em>soft</em> items for the nursery nest. Can you find about <em>3</em> things?"
   QuestDescription: Find 3 items that might be soft enough for a baby bird nest!
@@ -27043,12 +27043,12 @@ MonoBehaviour:
   RequiredReputation: 1
   CharacterMusic: {fileID: 8300000, guid: 36e753ef59ac65c4c9d85b1996f7930c, type: 3}
   CharacterTalkSounds: []
-  StartDialogue: "Merry Christmas! Er, well, I wish it was. I am so ready for the
-    holidays! But it has been so hard to find Christmas decorations this time of
-    year\u2026It\u2019s not too early to celebrate I don\u2019t care what anyone
-    says! \r\nYou\u2019re the new Interior Birdecorator in the park, right? Do you
-    think you can help me decorate my nest so that it has as much holiday spirit
-    as I do?\r"
+  StartDialogue: "Merry Christmas!\r\n###\r\nEr, well, I wish it was. I am so ready
+    for the holidays! But it has been so hard to find Christmas decorations this
+    time of year\u2026\r\n\r\nIt\u2019s not too early to celebrate I don\u2019t care
+    what anyone says! \r\n###\r\nYou\u2019re the new Interior Birdecorator in the
+    park, right? Do you think you can help me decorate my nest so that it has as
+    much holiday spirit as I do?"
   QuestAcceptedDialogue: "Ho ho ho! What a good helper! I was hoping you could find
     <em>Christmassy</em> items to put around my <em>tree</em>. Can you bring me <em>3</em>
     decorations?\n###\nOh...do you think you could also help me find a <em>Christmas
@@ -44253,9 +44253,10 @@ MonoBehaviour:
   CharacterMusic: {fileID: 8300000, guid: 553895b23fd7808408b0d9a01740782b, type: 3}
   CharacterTalkSounds: []
   StartDialogue: "What\u2019s up, bird? I heard you were the new Birdecorator in
-    town. Quite the reputation you\u2019ve made for yourself. \r\nI confess I could
-    use the help with my new nest. I\u2019m starting over in the park too. To many
-    <i>vultures</i> back home if you know what I mean. \r\n"
+    town. Quite the reputation you\u2019ve made for yourself.\r\n###\r\nI confess
+    I could use the help with my new nest. I\u2019m starting over in the park too.
+    To many <i>vultures</i> back home if you know what I mean.\r\n\r\nThink ya can
+    help a bird out?"
   QuestAcceptedDialogue: "Oh, worm? Peck yeah. This place is a little to clean for
     my taste. Could you find me some <em>garbage</em>? I think <em>3</em> pieces
     would be plenty. I only want it on one side of my nest though. Gotta have a clean

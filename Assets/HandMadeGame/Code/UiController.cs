@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public static class UiController
@@ -41,7 +41,9 @@ public static class UiController
         .Trim()
         .Replace("<em>", "<color=#fee761>")
         .Replace("</em>", "</color>")
-        .Replace('�', '\'')
-        .Replace("�", "...")
+        .Replace('’', '\'')
+        .Replace('“', '"')
+        .Replace('”', '"')
+        .Replace("…", "...")
         ;
 }

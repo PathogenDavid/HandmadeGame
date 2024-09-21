@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class HudTests : MonoBehaviour
@@ -98,7 +98,11 @@ public class HudTests : MonoBehaviour
 
                     (string label, string dialogue) = Rambles.Dequeue();
                     CurrentRamble = label;
-                    DialogueController.ShowDialogue(RamblePortrait, dialogue, () => ShowNextRamble());
+
+                    if (label == "QuestDescription")
+                        InfoPopupController.ShowPopup(dialogue, () => ShowNextRamble());
+                    else
+                        DialogueController.ShowDialogue(RamblePortrait, dialogue, () => ShowNextRamble());
                 }
 
                 ShowNextRamble();

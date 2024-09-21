@@ -45,10 +45,15 @@ public sealed class GameFlow : MonoBehaviour
 
         Audio.SetMusicVolume(3);
         Audio.PlayMusic(ExplorationLoop);
+
+        // Always go back to the exploration music when UI interactions end
+        UiController.UiInteractionEnd += () => Audio.PlayMusic(ExplorationLoop);
     }
 
     public void HandleInteraction(Quest quest)
     {
+        Audio.PlayMusic(quest.CharacterMusic);
+
         switch (quest.CurrentState)
         {
             case QuestState.NotStarted:
@@ -146,6 +151,8 @@ public sealed class GameFlow : MonoBehaviour
     {
         if (quest != CurrentQuest)
             throw new InvalidOperationException("Arrangement mode should not be ended with a quest that isn't the current quest!");
+
+        Audio.PlayMusic(quest.CharacterMusic);
 
         PuzzleOutcome outcome = quest.Validator.CheckPuzzle(quest);
         switch (outcome)

@@ -18,12 +18,17 @@ public class Audio : MonoBehaviour
 
     private float MusicVolume = 0;
     private float SFXVolume = 0;
-    private AudioSource[] MusicSources;
-    private AudioSource SfxSource, SfxSourcePitched;
-    private int ActiveMusicSourceIndex;
+
+    private AudioSource CurrentMusicSource;
+    private AudioSource PreviousMusicSource;
+
+    private AudioSource SfxSource;
+    private AudioSource SfxSourcePitched;
     private bool MusicCrossfadeActive;
     private bool QueueVolumeLock = false;
     private float QueueCrossoverTime;
+
+    private const float DefaultCrossFadeTime = 10f;
 
     private void Awake()
     {
@@ -35,16 +40,18 @@ public class Audio : MonoBehaviour
         }
 
         // Create two music audio sources, this will allow the script to cross-fade between two songs
-        MusicSources = new AudioSource[2];
-
-        // This generates two new gameobjects and attaches an AudioSource component to it
-        for (int i = 0; i < 2; i++)
+        int musicSourceIndex = 0;
+        AudioSource CreateMusicSource()
         {
-            GameObject NewMusicSource = new GameObject("MusicSource" + (i + 1));
-            MusicSources[i] = NewMusicSource.AddComponent<AudioSource>();
-            MusicSources[i].loop = true;
+            GameObject NewMusicSource = new GameObject($"MusicSource{++musicSourceIndex}");
+            AudioSource source = NewMusicSource.AddComponent<AudioSource>();
+            source.loop = true;
             NewMusicSource.transform.parent = transform;
+            return source;
         }
+
+        CurrentMusicSource = CreateMusicSource();
+        PreviousMusicSource = CreateMusicSource();
 
         // Create a new gameobject with AudioSource to handle sound effects
         GameObject NewSfxSource = new GameObject("SFXSource");
@@ -57,13 +64,17 @@ public class Audio : MonoBehaviour
         NewSfxSourcePitched.transform.parent = transform;
     }
 
+    private void SwapMusicSources()
+        => (CurrentMusicSource, PreviousMusicSource) = (PreviousMusicSource, CurrentMusicSource);
+
     // This will force stop all sound effects
     public void StopAllSFX() => SfxSource.Stop();
 
     public void StopMusic(float _fade = 0)
     {
-        ActiveMusicSourceIndex = 1 - ActiveMusicSourceIndex;
-        StartCoroutine(AnimateMusicCrossfade(_fade));
+        SwapMusicSources();
+        CurrentMusicSource.clip = null;
+        DoCrossfade(_fade);
     }
 
     public static void SetMusicVolume(int Vol) => Audio.Singleton.SetMusicVolumeSingle(Vol);
@@ -73,8 +84,8 @@ public class Audio : MonoBehaviour
         MusicVolume = (float)Vol / 10;
         if (!MusicCrossfadeActive)
         {
-            MusicSources[ActiveMusicSourceIndex].volume = MusicVolume;
-            MusicSources[1 - ActiveMusicSourceIndex].volume = 0;
+            CurrentMusicSource.volume = MusicVolume;
+            PreviousMusicSource.volume = 0;
         }
     }
 
@@ -82,77 +93,60 @@ public class Audio : MonoBehaviour
     public void SetSFXVolumeSingle(int Vol)
     {
         Vol = Mathf.Clamp(Vol, 0, 10);
-        MusicVolume = (float)Vol / 10;
-        if (!MusicCrossfadeActive)
-        {
-            MusicSources[ActiveMusicSourceIndex].volume = MusicVolume;
-            MusicSources[1 - ActiveMusicSourceIndex].volume = 0;
-        }
+        SFXVolume = (float)Vol / 10;
+        SfxSource.volume = SFXVolume;
+        SfxSourcePitched.volume = SFXVolume;
     }
 
     // Returns the currently playing song
     public static AudioClip CurrentSong() { return Audio.Singleton.CurrentSongSingle(); }
-    public AudioClip CurrentSongSingle() { return MusicSources[ActiveMusicSourceIndex].clip; }
-    public float CurrentSongPosition() { return MusicSources[ActiveMusicSourceIndex].time; }
-    public void PauseCurrentSong() { MusicSources[ActiveMusicSourceIndex].Pause(); }
-    public void UnpauseCurrentSong() { MusicSources[ActiveMusicSourceIndex].UnPause(); }
+    public AudioClip CurrentSongSingle() { return CurrentMusicSource.clip; }
+    public float CurrentSongPosition() { return CurrentMusicSource.time; }
+    public void PauseCurrentSong() { CurrentMusicSource.Pause(); }
+    public void UnpauseCurrentSong() { CurrentMusicSource.UnPause(); }
 
     public static void QueueNextSong(AudioClip _clip) => Audio.Singleton.QueueNextSongSingle(_clip);
     public void QueueNextSongSingle(AudioClip _clip)
     {
         QueueVolumeLock = true;
-        MusicSources[ActiveMusicSourceIndex].loop = false;
-        QueueCrossoverTime = Time.time + MusicSources[ActiveMusicSourceIndex].clip.length;
-        MusicSources[1 - ActiveMusicSourceIndex].clip = _clip;
-        MusicSources[1 - ActiveMusicSourceIndex].PlayDelayed(MusicSources[ActiveMusicSourceIndex].clip.length - 0.06f); // Hard coded time to take into account song loading? It works OK enough
-        MusicSources[1 - ActiveMusicSourceIndex].volume = MusicVolume;
+        CurrentMusicSource.loop = false;
+        QueueCrossoverTime = Time.time + CurrentMusicSource.clip.length;
+        PreviousMusicSource.clip = _clip;
+        PreviousMusicSource.PlayDelayed(CurrentMusicSource.clip.length - 0.06f); // Hard coded time to take into account song loading? It works OK enough
+        PreviousMusicSource.volume = MusicVolume;
     }
 
     // This will load the referenced AudioClip and crossfade between them.
     // This also starts the music at the same timestamp as the currently playing song.
     // Great for music that has different layers!
-    public static void PlayMusic(AudioClip _clip, float _fade = 1) => Audio.Singleton.PlayMusicSingle(_clip, _fade);
-    public void PlayMusicSingle(AudioClip _clip, float _fade = 1)
+    public static void PlayMusic(AudioClip _clip, float _fade = DefaultCrossFadeTime) => Audio.Singleton.PlayMusicSingle(_clip, _fade);
+    public void PlayMusicSingle(AudioClip _clip, float _fade = DefaultCrossFadeTime)
     {
+        CurrentMusicSource.loop = true;
+        PreviousMusicSource.loop = true;
 
-        // This generates two new gameobjects and attaches an AudioSource component to it
-        for (int i = 0; i < 2; i++)
-        {
-            MusicSources[i].loop = true;
-        }
         if (QueueVolumeLock)
         {
             QueueVolumeLock = false;
             if (QueueCrossoverTime < Time.time)
             {
-                ActiveMusicSourceIndex = 1 - ActiveMusicSourceIndex;
-                MusicSources[ActiveMusicSourceIndex].volume = 0;
+                SwapMusicSources();
+                CurrentMusicSource.volume = 0;
             }
             else
             {
-                MusicSources[1 - ActiveMusicSourceIndex].volume = 0;
+                PreviousMusicSource.volume = 0;
             }
         }
 
         // If the requested audio is different from the currently playing audio, start fade
-        if (MusicSources[ActiveMusicSourceIndex].clip != _clip)
+        if (CurrentMusicSource.clip != _clip)
         {
-            ActiveMusicSourceIndex = 1 - ActiveMusicSourceIndex;
-            MusicSources[ActiveMusicSourceIndex].clip = _clip;
-
-            // If the current song has progressed longer than the new song's length, the new song will start at 0
-            if (MusicSources[ActiveMusicSourceIndex].clip.length < MusicSources[1 - ActiveMusicSourceIndex].time)
-            {
-                MusicSources[ActiveMusicSourceIndex].timeSamples = 0;
-            }
-            else
-            {
-                MusicSources[ActiveMusicSourceIndex].timeSamples = MusicSources[1 - ActiveMusicSourceIndex].timeSamples;
-                MusicSources[ActiveMusicSourceIndex].Play(); // Hard code Play() here, helps keep things in sync
-            }
-
-            MusicSources[ActiveMusicSourceIndex].Play();
-            StartCoroutine(AnimateMusicCrossfade(_fade));
+            SwapMusicSources();
+            CurrentMusicSource.clip = _clip;
+            CurrentMusicSource.timeSamples = Mathf.Clamp(PreviousMusicSource.timeSamples, 0, CurrentMusicSource.clip.samples);
+            CurrentMusicSource.Play();
+            DoCrossfade(_fade);
         }
     }
 
@@ -170,29 +164,38 @@ public class Audio : MonoBehaviour
     public static void StopSFX() { Audio.Singleton.StopSFXSingle(); }
     public void StopSFXSingle() { SfxSource.Stop(); }
 
-    // Small coroutine that crossfades the currently playing song with the new one
-    private IEnumerator AnimateMusicCrossfade(float _duration)
+    private void DoCrossfade(float _duration)
     {
-        MusicCrossfadeActive = true;
-        float Percent = 0;
-        while (Percent < 1)
+        // Don't crossfade if the previous track was null (IE: silence)
+        if (PreviousMusicSource.clip == null)
+            CurrentMusicSource.volume = MusicVolume;
+        else
+            StartCoroutine(AnimateMusicCrossfade(_duration));
+
+        // Small coroutine that crossfades the currently playing song with the new one
+        IEnumerator AnimateMusicCrossfade(float _duration)
         {
-            Percent += Time.deltaTime / _duration;
-            MusicSources[ActiveMusicSourceIndex].volume = Mathf.Lerp(0, MusicVolume, Percent);
+            MusicCrossfadeActive = true;
+            float Percent = 0;
+            while (Percent < 1)
+            {
+                Percent += Time.deltaTime / _duration;
+                CurrentMusicSource.volume = Mathf.Lerp(0, MusicVolume, Percent);
+                if (!QueueVolumeLock)
+                {
+                    PreviousMusicSource.volume = Mathf.Lerp(MusicVolume, 0, Percent);
+                }
+                else
+                {
+                    PreviousMusicSource.volume = MusicVolume;
+                }
+                yield return new WaitForFixedUpdate();
+            }
+            MusicCrossfadeActive = false;
             if (!QueueVolumeLock)
             {
-                MusicSources[1 - ActiveMusicSourceIndex].volume = Mathf.Lerp(MusicVolume, 0, Percent);
+                PreviousMusicSource.Stop();
             }
-            else
-            {
-                MusicSources[1 - ActiveMusicSourceIndex].volume = MusicVolume;
-            }
-            yield return new WaitForFixedUpdate();
-        }
-        MusicCrossfadeActive = false;
-        if (!QueueVolumeLock)
-        {
-            MusicSources[1 - ActiveMusicSourceIndex].Stop();
         }
     }
 }

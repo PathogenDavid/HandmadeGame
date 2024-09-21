@@ -2945,7 +2945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterPortrait: {fileID: 21300000, guid: 72bfa0719427ef14f943674560e9cecd, type: 3}
   RequiredReputation: 0
-  CharacterMusic: {fileID: 0}
+  CharacterMusic: {fileID: 8300000, guid: ae83df44e8db840448aa2a59db2ee3cd, type: 3}
   CharacterTalkSounds: []
   StartDialogue: "Hello! Are you the new Birdecorator in the park? Goodness, I am
     SO glad you stopped by my nest! My partner is at the OGBRD right now for a check-up\u2026I 
@@ -26151,7 +26151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterPortrait: {fileID: 21300000, guid: 6494f05a182e28a43a340338bbefb9d9, type: 3}
   RequiredReputation: 1
-  CharacterMusic: {fileID: 0}
+  CharacterMusic: {fileID: 8300000, guid: 36e753ef59ac65c4c9d85b1996f7930c, type: 3}
   CharacterTalkSounds: []
   StartDialogue: "Merry Christmas! Er, well, I wish it was. I am so ready for the
     holidays! But it has been so hard to find Christmas decorations this time of
@@ -43418,7 +43418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterPortrait: {fileID: 21300000, guid: c730fc5951139b04b945942d99c30513, type: 3}
   RequiredReputation: 2
-  CharacterMusic: {fileID: 0}
+  CharacterMusic: {fileID: 8300000, guid: 553895b23fd7808408b0d9a01740782b, type: 3}
   CharacterTalkSounds: []
   StartDialogue: "What\u2019s up, bird? I heard you were the new Birdecorator in
     town. Quite the reputation you\u2019ve made for yourself. \r\nI confess I could

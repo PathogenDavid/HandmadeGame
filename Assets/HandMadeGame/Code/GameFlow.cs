@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,8 +28,6 @@ public sealed class GameFlow : MonoBehaviour
     public InfoPopupController InfoPopupController;
     public ArrangementModeControllerBase ArrangementModeController;
 
-    public AudioClip ExplorationLoop;
-
     private Quest CurrentQuest;
 
     public bool ShowDebugger;
@@ -43,16 +41,16 @@ public sealed class GameFlow : MonoBehaviour
             return;
         }
 
-        Audio.SetMusicVolume(3);
-        Audio.PlayMusic(ExplorationLoop);
+        //TODO: Don't do this until main menu is dismissed
+        BackgroundMusicController.Instance.TransitionToExplorationMusic();
 
         // Always go back to the exploration music when UI interactions end
-        UiController.UiInteractionEnd += () => Audio.PlayMusic(ExplorationLoop);
+        UiController.UiInteractionEnd += () => BackgroundMusicController.Instance.TransitionToExplorationMusic();
     }
 
     public void HandleInteraction(Quest quest)
     {
-        Audio.PlayMusic(quest.CharacterMusic);
+        BackgroundMusicController.Instance.TransitionToCharacterMusic(quest.CharacterMusic);
 
         switch (quest.CurrentState)
         {
@@ -152,7 +150,7 @@ public sealed class GameFlow : MonoBehaviour
         if (quest != CurrentQuest)
             throw new InvalidOperationException("Arrangement mode should not be ended with a quest that isn't the current quest!");
 
-        Audio.PlayMusic(quest.CharacterMusic);
+        BackgroundMusicController.Instance.TransitionToCharacterMusic();
 
         PuzzleOutcome outcome = quest.Validator.CheckPuzzle(quest);
         switch (outcome)

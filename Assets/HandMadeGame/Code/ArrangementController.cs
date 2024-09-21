@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,8 +25,6 @@ public sealed class ArrangementController : ArrangementModeControllerBase
     private Quest CurrentQuest;
     public bool IsActive => CurrentQuest != null;
 
-    public AudioClip DecorationMusic;
-
     private void Awake()
     {
         foreach (UiItemSlot itemSlot in ItemSlots)
@@ -49,7 +47,7 @@ public sealed class ArrangementController : ArrangementModeControllerBase
         ControllerPrompt.Show(UiController.InteractionKey, "Finish");
         MainCamera.gameObject.SetActive(false);
         ArrangementModeCamera.gameObject.SetActive(true);
-        Audio.PlayMusic(DecorationMusic);
+        BackgroundMusicController.Instance.TransitionToDecoratingMusic();
     }
 
     private void EndArrangementMode()

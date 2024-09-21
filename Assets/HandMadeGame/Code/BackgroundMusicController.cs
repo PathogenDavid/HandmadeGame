@@ -3,6 +3,18 @@ using UnityEngine.Audio;
 
 public sealed class BackgroundMusicController : MonoBehaviour
 {
+    private static BackgroundMusicController _Instance;
+    public static BackgroundMusicController Instance
+    {
+        get
+        {
+            if (_Instance is not null)
+                return _Instance;
+
+            return _Instance = FindObjectOfType<BackgroundMusicController>();
+        }
+    }
+
     public bool EnableDebugger;
 
     public AudioMixerSnapshot MainMenuSnapshot;
@@ -29,30 +41,58 @@ public sealed class BackgroundMusicController : MonoBehaviour
         MainMenuLoop.PlayScheduled(startTime + leadInDuration);
     }
 
+    public void TransitionToMainMenuMusic()
+        => MainMenuSnapshot.TransitionTo(TransitionTime);
+
+    public void TransitionToExplorationMusic()
+        => ExplorationSnapshot.TransitionTo(TransitionTime);
+
+    public void TransitionToCharacterMusic()
+        => CharacterSnapshot.TransitionTo(TransitionTime);
+
+    public void TransitionToCharacterMusic(AudioClip characterClip)
+    {
+        bool found = false;
+        foreach (AudioSource characterSource in CharacterSources)
+        {
+            if (characterSource.clip == characterClip)
+            {
+                found = true;
+                characterSource.mute = false;
+            }
+            else
+            {
+                characterSource.mute = true;
+            }
+        }
+
+        if (!found)
+            Debug.LogError($"Tried to transition to unregistered character music '{characterClip.name}'");
+
+        TransitionToCharacterMusic();
+    }
+
+    public void TransitionToDecoratingMusic()
+        => DecoratingSnapshot.TransitionTo(TransitionTime);
+
     private void OnGUI()
     {
         if (!EnableDebugger)
             return;
 
         if (GUILayout.Button("MainMenu"))
-            MainMenuSnapshot.TransitionTo(TransitionTime);
+            TransitionToMainMenuMusic();
         if (GUILayout.Button("Exploration"))
-            ExplorationSnapshot.TransitionTo(TransitionTime);
+            TransitionToExplorationMusic();
         if (GUILayout.Button("Character"))
-            CharacterSnapshot.TransitionTo(TransitionTime);
-        if (GUILayout.Button("DecoratingSnapshot"))
-            DecoratingSnapshot.TransitionTo(TransitionTime);
+            TransitionToCharacterMusic();
+        if (GUILayout.Button("Decorating"))
+            TransitionToDecoratingMusic();
 
         foreach (AudioSource source in CharacterSources)
         {
             if (GUILayout.Button(source.clip.name))
-            {
-                foreach (AudioSource characterSource in CharacterSources)
-                    characterSource.mute = true;
-
-                source.mute = false;
-                CharacterSnapshot.TransitionTo(TransitionTime);
-            }
+                TransitionToCharacterMusic(source.clip);
         }
     }
 }

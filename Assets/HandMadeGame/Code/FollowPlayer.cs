@@ -18,14 +18,16 @@ public class FollowPlayer : MonoBehaviour
         if (targetPosition.y <= 0) targetPosition = new Vector3(targetPosition.x, 0.2f, targetPosition.z);
 
         // Smoothly move the camera towards that target position
-        if (!bird.GetHovering()){
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
-        }
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 
     void LateUpdate()
     {
         if (!bird.GetHovering()) {
+            Vector3 lookDirection = target.position - this.transform.position;
+            lookDirection.Normalize();
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(lookDirection), lookSmoothTime * Time.deltaTime);
+        } else {
             Vector3 lookDirection = target.position - this.transform.position;
             lookDirection.Normalize();
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(lookDirection), lookSmoothTime * Time.deltaTime);

@@ -69,28 +69,36 @@ public class BirdController : MonoBehaviour
         float newPositionX = Input.GetAxisRaw("Mouse Y");
         float newPositionY = Input.GetAxisRaw("Mouse X");
         float deltaX = lastMousePositionX - newPositionX;
-        float deltaY = lastMousePositionX - newPositionY;
+        float deltaY = lastMousePositionY - newPositionY;
         lastMousePositionX = newPositionX;
         lastMousePositionY = newPositionY;
 
+        float oldX = newX;
+        float oldY = newY;
         newX += 1000 * Time.deltaTime * speed * deltaX;
-        newY -= 50 * Time.deltaTime * speed * deltaY;
+        newY -= 1000 * Time.deltaTime * speed * deltaY;
 
         // hide cursor again when clicking into game again
         // WILL NEED TO CHANGE THIS! to show cursor when decorating nest
         if (Input.GetMouseButtonDown(0)) Cursor.visible = false;
         
         // avoid big scary numbers
-        if (newX < -360) newX = 360 + newX;
-        if (newY < 0) newY = 360 + newY;
-        if (newY > 360) newY = newY - 360;
+        // if (newX < -360) newX = 360 + newX;
+        // if (newY < 0) newY = 360 + newY;
+        // if (newY > 360) newY = newY - 360;
 
-        // clamp x rotation
-        newX = Mathf.Clamp(newX, minX, maxX);
+        // // clamp x rotation
+        // newX = Mathf.Clamp(newX, minX, maxX);
 
+        float diffX = oldX - newX;
+        float diffY = oldY - newY;
+
+        transform.rotation *= Quaternion.AngleAxis(-diffY, Vector3.up);
+        transform.rotation *= Quaternion.AngleAxis(-diffX, this.gameObject.transform.right);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
         // update player rotation
-        transform.rotation = Quaternion.Euler(newX, newY, transform.rotation.z);
-        animModel.rotation = Quaternion.Euler(newX, newY, animModel.rotation.z);
+        //transform.rotation = Quaternion.Euler(newX, newY, transform.rotation.z);
+        //animModel.rotation = Quaternion.Euler(newX, newY, animModel.rotation.z);
 
         // handle movement logic
         Vector3 targetVelocity = transform.forward * horizontalMove * internalMoveSpeed;
@@ -110,14 +118,14 @@ public class BirdController : MonoBehaviour
             startingPos = Vector3.zero;
             hovering = false;
         }
-        // check if decelerating to tilt model down
-        if (horizontalMove == 0 && rb.velocity.magnitude != 0) {
-            Quaternion target = Quaternion.Euler(-15, 0, 0);
-            model.rotation = Quaternion.Slerp(model.rotation, target, tiltSmooth);
-        } else {
-            Quaternion target = Quaternion.Euler(0, 0, 0);
-            model.rotation = Quaternion.Slerp(model.rotation, target, tiltSmooth);
-        }
+        // // check if decelerating to tilt model down
+        // if (horizontalMove == 0 && rb.velocity.magnitude != 0) {
+        //     Quaternion target = Quaternion.Euler(-15, 0, 0);
+        //     model.rotation = Quaternion.Slerp(model.rotation, target, tiltSmooth);
+        // } else {
+        //     Quaternion target = Quaternion.Euler(0, 0, 0);
+        //     model.rotation = Quaternion.Slerp(model.rotation, target, tiltSmooth);
+        // }
     }
 
     public bool GetHovering() {

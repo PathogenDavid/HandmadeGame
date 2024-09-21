@@ -15,10 +15,6 @@ public sealed class ArrangementController : ArrangementModeControllerBase
 
     public UiItemSlot[] ItemSlots;
 
-    public Texture2D normalCursor;
-    public Texture2D grabbyCursor;
-    public Vector2 grabbyOffset = Vector2.zero;
-
     private UiItemSlot CurrentGrabTarget = null;
     private UiItemSlot CurrentDropTarget = null;
 
@@ -46,7 +42,6 @@ public sealed class ArrangementController : ArrangementModeControllerBase
         CurrentQuest = quest;
         UiController.StartUiInteraction();
         GridVisuals.SetActive(true);
-        Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
         ControllerPrompt.Show(UiController.InteractionKey, "Finish");
         MainCamera.gameObject.SetActive(false);
         ArrangementModeCamera.gameObject.SetActive(true);
@@ -107,7 +102,7 @@ public sealed class ArrangementController : ArrangementModeControllerBase
             return;
 
         CurrentGrabTarget = grabTarget;
-        Cursor.SetCursor(grabbyCursor, grabbyOffset, CursorMode.Auto);
+        CursorController.Instance.SetCursor(CursorKind.GrabbyHand);
         SoundEffectsController.Instance.PlayUiSound(PickUpSound);
     }
 
@@ -129,7 +124,7 @@ public sealed class ArrangementController : ArrangementModeControllerBase
         }
 
         CurrentGrabTarget = null;
-        Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
+        CursorController.Instance.SetCursor(CursorKind.OpenHand);
         Vector2 mouseCoords = Input.mousePosition;
 
         ref NestItem sourceSlot = ref grabTarget.ItemSlot;
@@ -145,10 +140,18 @@ public sealed class ArrangementController : ArrangementModeControllerBase
     }
 
     public void HoverStart(UiItemSlot slot)
-        => CurrentDropTarget = slot;
+    {
+        if (CurrentGrabTarget == null && slot.ItemSlot != null)
+            CursorController.Instance.SetCursor(CursorKind.OpenHand);
+
+        CurrentDropTarget = slot;
+    }
 
     public void HoverEnd(UiItemSlot slot)
     {
+        if (CurrentGrabTarget == null)
+            CursorController.Instance.SetCursor(CursorKind.Default);
+
         if (CurrentDropTarget == slot)
             CurrentDropTarget = null;
     }

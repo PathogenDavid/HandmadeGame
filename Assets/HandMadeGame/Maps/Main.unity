@@ -27011,6 +27011,58 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5915eb3e8a3f9c42bd4c36415073c58, type: 3}
+--- !u!1 &1148862254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1148862256}
+  - component: {fileID: 1148862255}
+  m_Layer: 0
+  m_Name: CursorController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1148862255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148862254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03e38c192c93784b87b3710316e4853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultCursor: {fileID: 2800000, guid: 0b3af7198ee45254ba7acd84c44cbe63, type: 3}
+  DefaultCursorHotSpot: {x: 18, y: 10}
+  PointCursor: {fileID: 2800000, guid: ed363f44ee858fb4eb10e3c7e52ce0ff, type: 3}
+  PointCursorHotSpot: {x: 15, y: 10}
+  OpenHandCursor: {fileID: 2800000, guid: 35113ccbe40975d469573833c386abfa, type: 3}
+  OpenHandCursorHotSpot: {x: 25, y: 18}
+  GrabbyHandCursor: {fileID: 2800000, guid: c5b7140213a0f8b4b8469ed578a90902, type: 3}
+  GrabbyHandCursorHotSpot: {x: 25, y: 18}
+--- !u!4 &1148862256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148862254}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1153996658
 GameObject:
   m_ObjectHideFlags: 0
@@ -48934,9 +48986,6 @@ MonoBehaviour:
   - {fileID: 832618056}
   - {fileID: 341769589}
   - {fileID: 1919766709}
-  normalCursor: {fileID: 2800000, guid: ae82820897e199d4a93407fdd6b0b729, type: 3}
-  grabbyCursor: {fileID: 2800000, guid: 194b9c69e3ec7c74196ea636b722da79, type: 3}
-  grabbyOffset: {x: 50, y: 0}
   PickUpSound: {fileID: 8300000, guid: 4d55faf4922e6d343ae30853fef28933, type: 3}
   PlaceDownSound: {fileID: 8300000, guid: 2010503352bbced49b879ca30b83b842, type: 3}
 --- !u!4 &2025630324
@@ -52333,6 +52382,7 @@ SceneRoots:
   - {fileID: 1698292201}
   - {fileID: 1016038618}
   - {fileID: 1816721122}
+  - {fileID: 1148862256}
   - {fileID: 170076735}
   - {fileID: 1441048546}
   - {fileID: 475276780}

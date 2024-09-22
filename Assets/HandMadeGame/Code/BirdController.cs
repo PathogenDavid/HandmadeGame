@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BirdController : MonoBehaviour
 {
@@ -13,8 +13,7 @@ public class BirdController : MonoBehaviour
 
     // access to rigidbody and model
     public Rigidbody rb;
-    public Transform model;
-    public Transform animModel;
+    public Transform visuals;
 
     // utility for flying rotation
     private float newX;
@@ -22,9 +21,13 @@ public class BirdController : MonoBehaviour
 
     // utility for stopping tilt & hovering
     public float tiltSmooth = 0.01f;
-    private float sinCount = 0f;
-    private Vector3 startingPos = Vector3.zero;
     public bool hovering = true;
+
+    // Hover animation parameters
+    private float hoverAnimation = 0f;
+    public float hoverAnimationSpeed = 2.5f;
+    public float hoverAnimationMagnitude = (1f / 15f) * 0.5f;
+    public float hoverAnimationCutoff = 0.1f;
 
     // utility for mouse shtuff
     private float lastMousePositionX;
@@ -88,17 +91,18 @@ public class BirdController : MonoBehaviour
 
         // check if player is hovering
         if (rb.velocity.magnitude < .01){
-            if (startingPos == Vector3.zero) {
-                startingPos = this.transform.position;
-            }
             hovering = true;
             rb.velocity = Vector3.zero;
-            sinCount = sinCount + 0.01f;
-            this.transform.position = new Vector3(startingPos.x, startingPos.y + (Mathf.Sin(sinCount) / 15), startingPos.z);
         } else {
-            sinCount = 0;
-            startingPos = Vector3.zero;
             hovering = false;
+        }
+
+        // apply hover animation when player is hovering in place
+        {
+            hoverAnimation = (hoverAnimation + hoverAnimationSpeed * Time.deltaTime) % (Mathf.PI * 2f);
+            float speedMagnitude = Mathf.Clamp01((hoverAnimationCutoff - rb.velocity.magnitude) / hoverAnimationCutoff);
+            float hover = Mathf.Sin(hoverAnimation) * hoverAnimationMagnitude * speedMagnitude;
+            visuals.transform.localPosition = new Vector3(0f, hover, 0f);
         }
 
         // check if decelerating to tilt model down

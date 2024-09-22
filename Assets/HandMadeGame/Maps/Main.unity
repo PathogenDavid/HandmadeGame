@@ -24018,7 +24018,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 984134187}
+    m_TransformParent: {fileID: 1829557761}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: f602148341bcc5f448fcc86337d04dd1,
         type: 3}
@@ -24043,17 +24043,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f602148341bcc5f448fcc86337d04dd1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f602148341bcc5f448fcc86337d04dd1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f602148341bcc5f448fcc86337d04dd1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f602148341bcc5f448fcc86337d04dd1,
         type: 3}
@@ -24610,38 +24610,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2077124836}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &984134186
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 984134187}
-  m_Layer: 0
-  m_Name: PlayerDummy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &984134187
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984134186}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1052543798}
-  m_Father: {fileID: 1829557761}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &988934698
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40740,7 +40708,7 @@ GameObject:
   - component: {fileID: 1669233359}
   - component: {fileID: 1669233358}
   - component: {fileID: 1669233357}
-  - component: {fileID: 1669233356}
+  - component: {fileID: 1669233361}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -40748,22 +40716,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1669233356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1669233355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de9d44dc315e4fd4fafc0c18d9c17e12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bird: {fileID: 1829557766}
-  target: {fileID: 1829557761}
-  smoothTime: 0.3
-  lookSmoothTime: 4
 --- !u!114 &1669233357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40882,6 +40834,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1669233361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669233355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a74fae8b812e9148baa9266e849b834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bird: {fileID: 1829557766}
+  target: {fileID: 1829557761}
+  smoothTime: 0.3
+  lookSmoothTime: 4
+  refVec: {x: 0, y: 0.5, z: -1}
 --- !u!1001 &1674987009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45053,7 +45022,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1829557761}
   - component: {fileID: 1829557763}
-  - component: {fileID: 1829557762}
   - component: {fileID: 1829557764}
   - component: {fileID: 1829557765}
   - component: {fileID: 1829557766}
@@ -45077,35 +45045,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 984134187}
+  - {fileID: 1052543798}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1829557762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829557760}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cc593d94f7b688458e2508c8d5c45ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minX: -30
-  maxX: 30
-  speed: 0.5
-  lowSpeedLimit: 1
-  highSpeedLimit: 1.8
-  speedAdjustment: 0.001
-  moveSpeed: 1.4
-  internalMoveSpeed: 0
-  moveSmoothing: 0.8
-  rb: {fileID: 1829557763}
-  model: {fileID: 984134187}
-  animModel: {fileID: 1052543798}
-  tiltSmooth: 0.01
-  hovering: 1
 --- !u!54 &1829557763
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -45130,8 +45072,8 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_Interpolate: 1
+  m_Constraints: 64
   m_CollisionDetection: 0
 --- !u!135 &1829557764
 SphereCollider:
@@ -45181,23 +45123,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1829557760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff2f7c1320e64c64eaed832bd647b523, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cc593d94f7b688458e2508c8d5c45ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -30
-  maxX: 30
   speed: 0.5
-  lowSpeedLimit: 1
-  highSpeedLimit: 1.8
-  speedAdjustment: 0.001
   moveSpeed: 1.4
-  internalMoveSpeed: 0
   moveSmoothing: 0.8
   rb: {fileID: 1829557763}
-  model: {fileID: 984134187}
-  animModel: {fileID: 1052543798}
+  visuals: {fileID: 1052543798}
   tiltSmooth: 0.01
   hovering: 1
+  hoverAnimationSpeed: 2.5
+  hoverAnimationMagnitude: 0.033333335
+  hoverAnimationCutoff: 0.1
 --- !u!4 &1832119427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7156350169396152092, guid: 6e3b176020cc7904f9c7afa29fdc429f,

@@ -7,9 +7,8 @@ public class BirdController : MonoBehaviour
 
     // movement for flying
     public float moveSpeed = 1.4f;
-    public float internalMoveSpeed = 0f;
     public float moveSmoothing = 0.8f;
-    private Vector3 zeroVec = Vector3.zero;
+    private Vector3 acceleration = Vector3.zero;
 
     // access to rigidbody and model
     public Rigidbody rb;
@@ -37,16 +36,12 @@ public class BirdController : MonoBehaviour
     {
         //TODO: Properly integrate with UiController
         Cursor.lockState = CursorLockMode.Locked;
-        internalMoveSpeed = moveSpeed;
         lastMousePositionX = Input.GetAxisRaw("Mouse Y");
         lastMousePositionY = Input.GetAxisRaw("Mouse X");
     }
 
     void Update()
     {
-        // update flying velocity
-        float horizontalMove = Input.GetAxisRaw("Vertical");
-        if (horizontalMove < 0) horizontalMove = 0;
 
         // mousePositionY corresponds to left/right and X to up/down
         // will go back and update variable names at some point
@@ -85,9 +80,9 @@ public class BirdController : MonoBehaviour
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
 
         // handle movement logic
-        Vector3 targetVelocity = transform.forward * horizontalMove * internalMoveSpeed;
-        Vector3 curVelocity = rb.velocity;
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref zeroVec, moveSmoothing);
+        float horizontalMove = Mathf.Clamp01(Input.GetAxisRaw("Vertical"));
+        Vector3 targetVelocity = transform.forward * horizontalMove * moveSpeed;
+        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref acceleration, moveSmoothing);
 
         // check if player is hovering
         if (rb.velocity.magnitude < .01){

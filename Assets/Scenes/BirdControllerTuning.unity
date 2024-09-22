@@ -562,7 +562,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.5
   moveSpeed: 1.4
-  internalMoveSpeed: 0
   moveSmoothing: 0.8
   rb: {fileID: 1057772259011107831}
   visuals: {fileID: 5369962416505534593}

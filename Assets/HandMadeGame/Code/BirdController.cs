@@ -3,7 +3,8 @@
 public class BirdController : MonoBehaviour
 {
     // mouse look
-    public float lookSpeed = 60f;
+    public float lookSpeed = 50f;
+    public float maxLookSpeed = 5f;
     public bool invertHorizontalLook;
     public bool invertVerticalLook;
 
@@ -27,10 +28,15 @@ public class BirdController : MonoBehaviour
     public float hoverAnimationMagnitude = (1f / 15f) * 0.5f;
     public float hoverAnimationCutoff = 0.1f;
 
-    void Start()
+    private void Awake()
     {
-        //TODO: Properly integrate with UiController
+        UiController.UiInteractionStart += () => Cursor.lockState = CursorLockMode.None;
+        UiController.UiInteractionEnd += () => Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.Locked;
+
+#if !UNITY_EDITOR && UNITY_WEBGL
+        WebGLInput.stickyCursorLock = false;
+#endif
     }
 
     private void FixedUpdate()
@@ -55,12 +61,27 @@ public class BirdController : MonoBehaviour
     private void Update()
     {
         // update player rotation
-        Vector2 look = new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y")) * lookSpeed * Mathf.Clamp01(Time.deltaTime);
-        if (invertHorizontalLook)
-            look.x *= -1f;
-        if (invertVerticalLook)
-            look.y *= -1f;
-        visuals.rotation = Quaternion.AngleAxis(look.x, Vector3.up) * Quaternion.AngleAxis(look.y, visuals.right) * visuals.rotation;
+        if (Cursor.lockState == CursorLockMode.Locked && Application.isFocused)
+        {
+            Vector2 look = new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y"));
+
+#if UNITY_EDITOR
+            // The mouse is a lot speedier outside the editor, boost speed in editor to compensate
+            look *= 1.5f;
+#endif
+
+            if (invertHorizontalLook)
+                look.x *= -1f;
+            if (invertVerticalLook)
+                look.y *= -1f;
+
+            look *= lookSpeed * Mathf.Clamp01(Time.deltaTime);
+
+            if (look.magnitude > maxLookSpeed)
+                look = look.normalized * maxLookSpeed;
+
+            visuals.rotation = Quaternion.AngleAxis(look.x, Vector3.up) * Quaternion.AngleAxis(look.y, visuals.right) * visuals.rotation;
+        }
 
         // apply hover animation when player is hovering in place
         {

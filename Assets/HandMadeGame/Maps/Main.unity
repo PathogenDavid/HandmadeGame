@@ -45190,7 +45190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc593d94f7b688458e2508c8d5c45ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookSpeed: 60
+  lookSpeed: 50
+  maxLookSpeed: 5
   invertHorizontalLook: 0
   invertVerticalLook: 0
   moveSpeed: 5

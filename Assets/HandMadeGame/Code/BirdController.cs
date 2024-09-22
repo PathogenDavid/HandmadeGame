@@ -1,23 +1,23 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BirdController : MonoBehaviour
 {
     // rotation limits for flying
-    public float minX = 60f;
-    public float maxX = 120f;
-    public float speed = .5f;
+    public float minX = -30f;
+    public float maxX = 30f;
+    public float speed = 0.5f;
 
     // speed limits for birds
-    public float lowSpeedLimit = 0.6f;
-    public float highSpeedLimit = 1.4f;
-    public float speedAdjustment = 0.01f;
+    public float lowSpeedLimit = 1f;
+    public float highSpeedLimit = 1.8f;
+    public float speedAdjustment = 0.001f;
 
     // movement for flying
-    public float moveSpeed = 10f;
-    public float internalMoveSpeed;
-    public float moveSmoothing = 0.05f;
+    public float moveSpeed = 1.4f;
+    public float internalMoveSpeed = 0f;
+    public float moveSmoothing = 0.8f;
     private Vector3 zeroVec = Vector3.zero;
 
     // access to rigidbody and model
@@ -36,7 +36,7 @@ public class BirdController : MonoBehaviour
     private float horizontalMove = 0.0f;
 
     // utility for stopping tilt & hovering
-    public float tiltSmooth = 0.3f;
+    public float tiltSmooth = 0.01f;
     private float sinCount = 0f;
     private Vector3 startingPos = Vector3.zero;
     public bool hovering = true;

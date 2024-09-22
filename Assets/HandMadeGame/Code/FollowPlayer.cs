@@ -7,7 +7,7 @@ public class FollowPlayer : MonoBehaviour
     public BirdController bird;
     public Transform target;
     public float smoothTime = 0.3f;
-    public float lookSmoothTime = 0.1f;
+    public float lookSmoothTime = 4f;
     private Vector3 refVec = new Vector3(0, 0.5f, -1);
     private Vector3 velocity = Vector3.zero;
 

@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: MAIN BIRD
     second: {fileID: 2100000, guid: 1899709b5b31966408992dbab1490abc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: no_outline_pls
+    second: {fileID: 2100000, guid: 29af06595140a6d43ad2cd9af2f7ea15, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

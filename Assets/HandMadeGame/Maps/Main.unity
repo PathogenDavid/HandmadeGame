@@ -45129,7 +45129,8 @@ MonoBehaviour:
   lookSpeed: 60
   invertHorizontalLook: 0
   invertVerticalLook: 0
-  moveSpeed: 10
+  moveSpeed: 5
+  fastMoveSpeed: 15
   moveSmoothing: 0.8
   rb: {fileID: 1829557763}
   visuals: {fileID: 1052543798}

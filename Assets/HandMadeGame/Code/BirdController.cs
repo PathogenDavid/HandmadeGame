@@ -8,7 +8,8 @@ public class BirdController : MonoBehaviour
     public bool invertVerticalLook;
 
     // movement
-    public float moveSpeed = 10f;
+    public float moveSpeed = 5f;
+    public float fastMoveSpeed = 15f;
     public float moveSmoothing = 0.8f;
     private Vector3 acceleration = Vector3.zero;
 
@@ -36,7 +37,7 @@ public class BirdController : MonoBehaviour
     {
         // handle movement logic
         float horizontalMove = Mathf.Clamp01(Input.GetAxisRaw("Vertical"));
-        Vector3 targetVelocity = visuals.forward * horizontalMove * moveSpeed;
+        Vector3 targetVelocity = visuals.forward * horizontalMove * (Input.GetKey(KeyCode.LeftShift) ? fastMoveSpeed : moveSpeed);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref acceleration, moveSmoothing);
 
         // check if player is hovering

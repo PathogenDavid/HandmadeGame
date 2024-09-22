@@ -9,6 +9,7 @@ public class BirdController : MonoBehaviour
     public bool invertVerticalLook;
 
     // movement
+    private bool suppressMovement = false;
     public float moveSpeed = 5f;
     public float fastMoveSpeed = 15f;
     public float moveSmoothing = 0.8f;
@@ -30,10 +31,19 @@ public class BirdController : MonoBehaviour
 
     private void Awake()
     {
-        UiController.UiInteractionStart += () => Cursor.lockState = CursorLockMode.None;
-        UiController.UiInteractionEnd += () => Cursor.lockState = CursorLockMode.Locked;
-        Cursor.lockState = CursorLockMode.Locked;
+        UiController.UiInteractionStart += () =>
+        {
+            suppressMovement = true;
+            Cursor.lockState = CursorLockMode.None;
+        };
 
+        UiController.UiInteractionEnd += () =>
+        {
+            suppressMovement = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        };
+
+        Cursor.lockState = CursorLockMode.Locked;
 #if !UNITY_EDITOR && UNITY_WEBGL
         WebGLInput.stickyCursorLock = false;
 #endif
@@ -41,6 +51,13 @@ public class BirdController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (suppressMovement)
+        {
+            rb.velocity = Vector3.zero;
+            acceleration = Vector3.zero;
+            return;
+        }
+
         // handle movement logic
         float horizontalMove = Mathf.Clamp01(Input.GetAxisRaw("Vertical"));
         Vector3 targetVelocity = visuals.forward * horizontalMove * (Input.GetKey(KeyCode.LeftShift) ? fastMoveSpeed : moveSpeed);

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public sealed class SceneSelector : MonoBehaviour
@@ -18,7 +18,7 @@ public sealed class SceneSelector : MonoBehaviour
         }
 
         SceneButton("GameplayFlowTestScene");
-        SceneButton("BirdController");
+        SceneButton("MusicTestScene");
         SceneButton("Main");
     }
 }

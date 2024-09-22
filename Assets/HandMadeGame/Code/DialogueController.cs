@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public sealed class DialogueController : MonoBehaviour
 {
@@ -22,6 +23,14 @@ public sealed class DialogueController : MonoBehaviour
     private bool ShowButtonsForFinalText;
 
     public InventoryHotBarController InventoryHotBar;
+
+    public float SecondsPerCharacter = 0.01f;
+    public float CharacterTimer = 0f;
+    public int RemainingCharacterCount;
+    private bool IsAnimating => RemainingCharacterCount > 0;
+
+    private Random ChirpRandomness;
+    public AudioClip[] ChirpFont { get; set; }
 
     private static Action NoOp = () => { };
 
@@ -61,9 +70,18 @@ public sealed class DialogueController : MonoBehaviour
         Portrait.sprite = portrait;
         DialogueText.text = UiController.ProcessDisplayString(message);
 
+        // Initialize dialogue text animation
+        DialogueText.ForceMeshUpdate(ignoreActiveState: true);
+        DialogueText.maxVisibleCharacters = 0;
+        CharacterTimer = SecondsPerCharacter;
+        RemainingCharacterCount = DialogueText.textInfo.characterCount;
+
+        ChirpRandomness = new Random(DialogueText.text.Length);
+
+        // Buttons are not actually made visible until dialogue stops animating
         ButtonsAreVisible = showButtons;
-        YesButton.gameObject.SetActive(showButtons);
-        NoButton.gameObject.SetActive(showButtons);
+        YesButton.gameObject.SetActive(false);
+        NoButton.gameObject.SetActive(false);
 
         _DialogueWasJustShown = true;
 
@@ -115,7 +133,35 @@ public sealed class DialogueController : MonoBehaviour
 
     private void Update()
     {
-        if (gameObject.activeInHierarchy && !ButtonsAreVisible)
+        if (!gameObject.activeInHierarchy)
+            return;
+
+        if (IsAnimating)
+        {
+            CharacterTimer -= Time.deltaTime;
+            if (CharacterTimer < 0f)
+            {
+                CharacterTimer = SecondsPerCharacter;
+                RemainingCharacterCount--;
+                DialogueText.maxVisibleCharacters++;
+                SoundEffectsController.Instance.PlayChirp(ChirpRandomness, ChirpFont);
+            }
+
+            // Allow skipping the animation
+            if (UiController.CheckGlobalDismiss())
+            {
+                RemainingCharacterCount = 0;
+                DialogueText.maxVisibleCharacters = int.MaxValue;
+            }
+
+            // Show buttons when animation ends if they were requested
+            if (!IsAnimating && ButtonsAreVisible)
+            {
+                YesButton.gameObject.SetActive(true);
+                NoButton.gameObject.SetActive(true);
+            }
+        }
+        else if (!ButtonsAreVisible)
         {
             if (UiController.CheckGlobalDismiss())
             {

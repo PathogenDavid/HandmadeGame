@@ -2952,7 +2952,10 @@ MonoBehaviour:
   CharacterPortrait: {fileID: 21300000, guid: 72bfa0719427ef14f943674560e9cecd, type: 3}
   RequiredReputation: 0
   CharacterMusic: {fileID: 8300000, guid: ae83df44e8db840448aa2a59db2ee3cd, type: 3}
-  CharacterTalkSounds: []
+  CharacterTalkSounds:
+  - {fileID: 8300000, guid: bc74df066fc23194da547aa3368a97df, type: 3}
+  - {fileID: 8300000, guid: ae559fd9b183ac34abbf96dfde5035ce, type: 3}
+  - {fileID: 8300000, guid: 4b764a889cf653c49bc081ddd78b47ea, type: 3}
   StartDialogue: "Hello! Are you the new Birdecorator in the park? Goodness, I am
     SO glad you stopped by my nest! My partner is at the OGBRD right now for a check-up\u2026\r\n###\r\nI
     thought it might be nice to surprise her by having the nursery set up when she
@@ -11050,6 +11053,7 @@ GameObject:
   - component: {fileID: 454280716}
   - component: {fileID: 454280715}
   - component: {fileID: 454280714}
+  - component: {fileID: 454280717}
   m_Layer: 0
   m_Name: SoundEffects
   m_TagString: Untagged
@@ -11070,6 +11074,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UiAudioSource: {fileID: 454280715}
+  BirdChirpAudioSource: {fileID: 454280717}
+  ChirpPitchVariance: 0.2
 --- !u!82 &454280715
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11182,6 +11188,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &454280717
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454280713}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 5065149298544448463, guid: 1f8eedd0febaea049b9e625cd972a294,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &454955877
 GameObject:
   m_ObjectHideFlags: 0
@@ -14112,6 +14215,9 @@ MonoBehaviour:
   NoText: {fileID: 1026502944}
   ButtonClickSound: {fileID: 8300000, guid: cb7ad22ee1240804da9c0e624c527462, type: 3}
   InventoryHotBar: {fileID: 729493676}
+  SecondsPerCharacter: 0.01
+  CharacterTimer: 0
+  RemainingCharacterCount: 0
 --- !u!1001 &570225447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28084,7 +28190,10 @@ MonoBehaviour:
   CharacterPortrait: {fileID: 21300000, guid: 6494f05a182e28a43a340338bbefb9d9, type: 3}
   RequiredReputation: 1
   CharacterMusic: {fileID: 8300000, guid: 36e753ef59ac65c4c9d85b1996f7930c, type: 3}
-  CharacterTalkSounds: []
+  CharacterTalkSounds:
+  - {fileID: 8300000, guid: 09634a276c14a1144930c546e11ef3f1, type: 3}
+  - {fileID: 8300000, guid: 453a39de68ed27141b60a629c1e54200, type: 3}
+  - {fileID: 8300000, guid: 03538b604117e174b8e17d768748f2c4, type: 3}
   StartDialogue: "Merry Christmas!\r\n###\r\nEr, well, I wish it was. I am so ready
     for the holidays! But it has been so hard to find Christmas decorations this
     time of year\u2026\r\n\r\nIt\u2019s not too early to celebrate I don\u2019t care
@@ -45408,7 +45517,10 @@ MonoBehaviour:
   CharacterPortrait: {fileID: 21300000, guid: c730fc5951139b04b945942d99c30513, type: 3}
   RequiredReputation: 2
   CharacterMusic: {fileID: 8300000, guid: 553895b23fd7808408b0d9a01740782b, type: 3}
-  CharacterTalkSounds: []
+  CharacterTalkSounds:
+  - {fileID: 8300000, guid: bed9ce88f29d3344695affadbcbd23cf, type: 3}
+  - {fileID: 8300000, guid: 46a9ed1f285be3e46ad3a8a9f1133260, type: 3}
+  - {fileID: 8300000, guid: dba4e6ddc86b4a04d92809204ac96b62, type: 3}
   StartDialogue: "What\u2019s up, bird? I heard you were the new Birdecorator in
     town. Quite the reputation you\u2019ve made for yourself.\r\n###\r\nI confess
     I could use the help with my new nest. I\u2019m starting over in the park too.

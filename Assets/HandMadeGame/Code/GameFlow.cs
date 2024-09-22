@@ -51,6 +51,7 @@ public sealed class GameFlow : MonoBehaviour
     public void HandleInteraction(Quest quest)
     {
         BackgroundMusicController.Instance.TransitionToCharacterMusic(quest.CharacterMusic);
+        DialogueController.ChirpFont = quest.CharacterTalkSounds;
 
         switch (quest.CurrentState)
         {

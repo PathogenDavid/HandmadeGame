@@ -75,6 +75,7 @@ public class HudTests : MonoBehaviour
             {
                 Rambles.Clear();
                 RamblePortrait = quest.CharacterPortrait;
+                DialogueController.ChirpFont = quest.CharacterTalkSounds;
                 Rambles.Enqueue(("StartDialogue", quest.StartDialogue));
                 Rambles.Enqueue(("QuestAcceptedDialogue", quest.QuestAcceptedDialogue));
                 Rambles.Enqueue(("QuestDescription", quest.QuestDescription));

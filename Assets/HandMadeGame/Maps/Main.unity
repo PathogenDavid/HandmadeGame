@@ -40847,10 +40847,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bird: {fileID: 1829557766}
-  target: {fileID: 1829557761}
-  smoothTime: 0.3
-  lookSmoothTime: 4
-  refVec: {x: 0, y: 0.5, z: -1}
+  target: {fileID: 1052543798}
+  positionSmoothing: 0.3
+  orientationSmoothing: 4
+  cameraOffset: {x: 0, y: 0.5, z: -1}
 --- !u!1001 &1674987009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45073,7 +45073,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 64
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!135 &1829557764
 SphereCollider:
@@ -45126,8 +45126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc593d94f7b688458e2508c8d5c45ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  moveSpeed: 1.4
+  lookSpeed: 60
+  invertHorizontalLook: 0
+  invertVerticalLook: 0
+  moveSpeed: 10
   moveSmoothing: 0.8
   rb: {fileID: 1829557763}
   visuals: {fileID: 1052543798}

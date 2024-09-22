@@ -2,21 +2,19 @@
 
 public class BirdController : MonoBehaviour
 {
-    // rotation limits for flying
-    public float speed = 0.5f;
+    // mouse look
+    public float lookSpeed = 60f;
+    public bool invertHorizontalLook;
+    public bool invertVerticalLook;
 
-    // movement for flying
-    public float moveSpeed = 1.4f;
+    // movement
+    public float moveSpeed = 10f;
     public float moveSmoothing = 0.8f;
     private Vector3 acceleration = Vector3.zero;
 
     // access to rigidbody and model
     public Rigidbody rb;
     public Transform visuals;
-
-    // utility for flying rotation
-    private float newX;
-    private float newY;
 
     // utility for stopping tilt & hovering
     public float tiltSmooth = 0.01f;
@@ -28,23 +26,17 @@ public class BirdController : MonoBehaviour
     public float hoverAnimationMagnitude = (1f / 15f) * 0.5f;
     public float hoverAnimationCutoff = 0.1f;
 
-    // utility for mouse shtuff
-    private float lastMousePositionX;
-    private float lastMousePositionY;
-
     void Start()
     {
         //TODO: Properly integrate with UiController
         Cursor.lockState = CursorLockMode.Locked;
-        lastMousePositionX = Input.GetAxisRaw("Mouse Y");
-        lastMousePositionY = Input.GetAxisRaw("Mouse X");
     }
 
     private void FixedUpdate()
     {
         // handle movement logic
         float horizontalMove = Mathf.Clamp01(Input.GetAxisRaw("Vertical"));
-        Vector3 targetVelocity = transform.forward * horizontalMove * moveSpeed;
+        Vector3 targetVelocity = visuals.forward * horizontalMove * moveSpeed;
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref acceleration, moveSmoothing);
 
         // check if player is hovering
@@ -61,41 +53,13 @@ public class BirdController : MonoBehaviour
 
     private void Update()
     {
-        // mousePositionY corresponds to left/right and X to up/down
-        // will go back and update variable names at some point
-
-        // find change in mouse position
-        float newPositionX = Input.GetAxisRaw("Mouse Y");
-        float newPositionY = Input.GetAxisRaw("Mouse X");
-        float deltaX = lastMousePositionX - newPositionX;
-        float deltaY = lastMousePositionY - newPositionY;
-        lastMousePositionX = newPositionX;
-        lastMousePositionY = newPositionY;
-
-        float oldX = newX;
-        float oldY = newY;
-        newX += 1000 * Time.deltaTime * speed * deltaX;
-        newY -= 1000 * Time.deltaTime * speed * deltaY;
-
-        float diffX = oldX - newX;
-        float diffY = oldY - newY;
-
-        // things I tried to fix the jitter
-        // tried using newX directly
-        // tried only multiplying rotation if diffX or diffY is over a certain value
-        // tried doing rotation in FixedUpdate
-        // tried lerping old and new positions, didn't fix it
-        // tried using moveRotation on the rigidbody, stopped movement entirely
-        // tried moving rigidbody to a child object of the bird
-        // tried changing interpolate setting to both interpolate and extrapolate on rigidbody
-
-        // next thing I was going to try was using the rigidbody's angular velocity but it's
-        // almost midnight and I'm tired haha
-
         // update player rotation
-        transform.rotation *= Quaternion.AngleAxis(-diffY, Vector3.up);
-        transform.rotation *= Quaternion.AngleAxis(-diffX, this.gameObject.transform.right);
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
+        Vector2 look = new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y")) * lookSpeed * Mathf.Clamp01(Time.deltaTime);
+        if (invertHorizontalLook)
+            look.x *= -1f;
+        if (invertVerticalLook)
+            look.y *= -1f;
+        visuals.rotation = Quaternion.AngleAxis(look.x, Vector3.up) * Quaternion.AngleAxis(look.y, visuals.right) * visuals.rotation;
 
         // apply hover animation when player is hovering in place
         {

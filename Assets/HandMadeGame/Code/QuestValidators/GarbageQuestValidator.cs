@@ -1,4 +1,4 @@
-public sealed class GarbageQuestValidator : QuestValidatorBase
+﻿public sealed class GarbageQuestValidator : QuestValidatorBase
 {
     public override PuzzleOutcome CheckPuzzle(Quest quest)
     {
@@ -39,9 +39,9 @@ public sealed class GarbageQuestValidator : QuestValidatorBase
         }
 
         // At this point we know if the trash is in a straight non-diagonal line, but we also need to reject trash lines which are not against the edge of the nest
-        if (commonX != 0 || commonX != quest.BoardWidth - 1)
+        if (commonX != 0 && commonX != quest.BoardWidth - 1)
             commonX = invalid;
-        if (commonY != 0 || commonY != quest.BoardHeight - 1)
+        if (commonY != 0 && commonY != quest.BoardHeight - 1)
             commonY = invalid;
 
         if (itemCount < 3)

@@ -40,9 +40,27 @@ public class BirdController : MonoBehaviour
         lastMousePositionY = Input.GetAxisRaw("Mouse X");
     }
 
-    void Update()
+    private void FixedUpdate()
     {
+        // handle movement logic
+        float horizontalMove = Mathf.Clamp01(Input.GetAxisRaw("Vertical"));
+        Vector3 targetVelocity = transform.forward * horizontalMove * moveSpeed;
+        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref acceleration, moveSmoothing);
 
+        // check if player is hovering
+        if (rb.velocity.magnitude < .01)
+        {
+            hovering = true;
+            //rb.velocity = Vector3.zero;
+        }
+        else
+        {
+            hovering = false;
+        }
+    }
+
+    private void Update()
+    {
         // mousePositionY corresponds to left/right and X to up/down
         // will go back and update variable names at some point
 
@@ -78,19 +96,6 @@ public class BirdController : MonoBehaviour
         transform.rotation *= Quaternion.AngleAxis(-diffY, Vector3.up);
         transform.rotation *= Quaternion.AngleAxis(-diffX, this.gameObject.transform.right);
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
-
-        // handle movement logic
-        float horizontalMove = Mathf.Clamp01(Input.GetAxisRaw("Vertical"));
-        Vector3 targetVelocity = transform.forward * horizontalMove * moveSpeed;
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref acceleration, moveSmoothing);
-
-        // check if player is hovering
-        if (rb.velocity.magnitude < .01){
-            hovering = true;
-            rb.velocity = Vector3.zero;
-        } else {
-            hovering = false;
-        }
 
         // apply hover animation when player is hovering in place
         {

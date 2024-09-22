@@ -394,6 +394,7 @@ MonoBehaviour:
   target: {fileID: 4685109515222746660}
   smoothTime: 0.3
   lookSmoothTime: 4
+  refVec: {x: 0, y: 0.5, z: -1}
 --- !u!1 &1302907067
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,12 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc593d94f7b688458e2508c8d5c45ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -30
-  maxX: 30
   speed: 0.5
-  lowSpeedLimit: 1
-  highSpeedLimit: 1.8
-  speedAdjustment: 0.001
   moveSpeed: 1.4
   internalMoveSpeed: 0
   moveSmoothing: 0.8

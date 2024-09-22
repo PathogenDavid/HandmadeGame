@@ -81,24 +81,26 @@ public class BirdController : MonoBehaviour
         // hide cursor again when clicking into game again
         // WILL NEED TO CHANGE THIS! to show cursor when decorating nest
         if (Input.GetMouseButtonDown(0)) Cursor.visible = false;
-        
-        // avoid big scary numbers
-        // if (newX < -360) newX = 360 + newX;
-        // if (newY < 0) newY = 360 + newY;
-        // if (newY > 360) newY = newY - 360;
-
-        // // clamp x rotation
-        // newX = Mathf.Clamp(newX, minX, maxX);
 
         float diffX = oldX - newX;
         float diffY = oldY - newY;
 
+        // things I tried to fix the jitter
+        // tried using newX directly
+        // tried only multiplying rotation if diffX or diffY is over a certain value
+        // tried doing rotation in FixedUpdate
+        // tried lerping old and new positions, didn't fix it
+        // tried using moveRotation on the rigidbody, stopped movement entirely
+        // tried moving rigidbody to a child object of the bird
+        // tried changing interpolate setting to both interpolate and extrapolate on rigidbody
+
+        // next thing I was going to try was using the rigidbody's angular velocity but it's
+        // almost midnight and I'm tired haha
+
+        // update player rotation
         transform.rotation *= Quaternion.AngleAxis(-diffY, Vector3.up);
         transform.rotation *= Quaternion.AngleAxis(-diffX, this.gameObject.transform.right);
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
-        // update player rotation
-        //transform.rotation = Quaternion.Euler(newX, newY, transform.rotation.z);
-        //animModel.rotation = Quaternion.Euler(newX, newY, animModel.rotation.z);
 
         // handle movement logic
         Vector3 targetVelocity = transform.forward * horizontalMove * internalMoveSpeed;
@@ -118,7 +120,7 @@ public class BirdController : MonoBehaviour
             startingPos = Vector3.zero;
             hovering = false;
         }
-        // // check if decelerating to tilt model down
+        // check if decelerating to tilt model down
         // if (horizontalMove == 0 && rb.velocity.magnitude != 0) {
         //     Quaternion target = Quaternion.Euler(-15, 0, 0);
         //     model.rotation = Quaternion.Slerp(model.rotation, target, tiltSmooth);

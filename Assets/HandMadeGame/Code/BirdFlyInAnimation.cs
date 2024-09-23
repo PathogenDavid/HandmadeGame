@@ -10,7 +10,7 @@ public sealed class BirdFlyInAnimation : MonoBehaviour
 
     private Vector3 Velocity = Vector3.zero;
     public float PositionSmoothing = 0.15f;
-    public float OrientationSmoothing = 2f;
+    public float OrientationSmoothing = 4f;
 
     private float TotalDistance;
     private Action FinishAction;

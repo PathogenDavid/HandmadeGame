@@ -250,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartButton: {fileID: 473317548}
   BirdController: {fileID: 1829557766}
+  BirdRigidBody: {fileID: 1829557763}
   BirdAnimator: {fileID: 1052543799}
   CameraController: {fileID: 1669233361}
   Prologue: {fileID: 1569722259}
@@ -11431,7 +11432,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UiAudioSource: {fileID: 454280715}
   BirdChirpAudioSource: {fileID: 454280717}
-  FlapAudioSource: {fileID: 0}
   ChirpPitchVariance: 0.2
 --- !u!82 &454280715
 AudioSource:
@@ -46906,7 +46906,7 @@ MonoBehaviour:
   Destination: {fileID: 1891319201}
   CameraController: {fileID: 1669233361}
   PositionSmoothing: 0.15
-  OrientationSmoothing: 2
+  OrientationSmoothing: 4
   CameraEnableDistancePercent: 0.9
   TreeRustleSound: {fileID: 8300000, guid: bc35635cf12730742a7ed82364663342, type: 3}
   TreeRustleTimer: 0.05

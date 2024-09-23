@@ -7,6 +7,7 @@ public sealed class MainMenu : MonoBehaviour
     public Button StartButton;
 
     public BirdController BirdController;
+    public Rigidbody BirdRigidBody;
     public Animator BirdAnimator;
     public FollowPlayer CameraController;
     public Prologue Prologue;
@@ -28,6 +29,10 @@ public sealed class MainMenu : MonoBehaviour
     private void Awake()
     {
         BirdController.enabled = false;
+        BirdRigidBody.isKinematic = true;
+        // Interpolation causes jitter on WebGL builds
+        RigidbodyInterpolation oldBirdRigidBodyInterpolation = BirdRigidBody.interpolation;
+        BirdRigidBody.interpolation = RigidbodyInterpolation.None;
         BirdAnimator.enabled = false;
         CameraController.enabled = false;
         InventoryHotBar.Hide();
@@ -112,6 +117,8 @@ public sealed class MainMenu : MonoBehaviour
                     BirdFlyInAnimation.StartAnimation(() =>
                     {
                         BirdController.enabled = true;
+                        BirdRigidBody.interpolation = oldBirdRigidBodyInterpolation;
+                        BirdRigidBody.isKinematic = false;
                         CameraController.enabled = true;
                         InventoryHotBar.Show();
                     });

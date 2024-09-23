@@ -25,6 +25,7 @@ public sealed class DialogueController : MonoBehaviour
     public InventoryHotBarController InventoryHotBar;
 
     public float SecondsPerCharacter = 0.01f;
+    public float PunctuationPause = 0.2f;
     public float CharacterTimer = 0f;
     public int RemainingCharacterCount;
     private bool IsAnimating => RemainingCharacterCount > 0;
@@ -141,10 +142,14 @@ public sealed class DialogueController : MonoBehaviour
             CharacterTimer -= Time.deltaTime;
             if (CharacterTimer < 0f)
             {
-                CharacterTimer = SecondsPerCharacter;
+                bool isPunctuation = DialogueText.textInfo.characterInfo[DialogueText.maxVisibleCharacters].character is '.' or '!' or '?';
+                CharacterTimer = isPunctuation ? PunctuationPause : SecondsPerCharacter;
+
                 RemainingCharacterCount--;
                 DialogueText.maxVisibleCharacters++;
-                SoundEffectsController.Instance.PlayChirp(ChirpRandomness, ChirpFont);
+
+                if (!isPunctuation)
+                    SoundEffectsController.Instance.PlayChirp(ChirpRandomness, ChirpFont);
             }
 
             // Allow skipping the animation

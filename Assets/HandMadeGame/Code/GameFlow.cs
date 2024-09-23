@@ -41,9 +41,6 @@ public sealed class GameFlow : MonoBehaviour
             return;
         }
 
-        //TODO: Don't do this until main menu is dismissed
-        BackgroundMusicController.Instance.TransitionToExplorationMusic();
-
         // Always go back to the exploration music when UI interactions end
         UiController.UiInteractionEnd += () => BackgroundMusicController.Instance.TransitionToExplorationMusic();
     }

@@ -149,6 +149,7 @@ public sealed class GameFlow : MonoBehaviour
             throw new InvalidOperationException("Arrangement mode should not be ended with a quest that isn't the current quest!");
 
         BackgroundMusicController.Instance.TransitionToCharacterMusic();
+        CursorController.Instance.SetCursor(CursorKind.Default);
 
         PuzzleOutcome outcome = quest.Validator.CheckPuzzle(quest);
         switch (outcome)

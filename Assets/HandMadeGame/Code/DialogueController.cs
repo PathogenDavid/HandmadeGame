@@ -43,12 +43,14 @@ public sealed class DialogueController : MonoBehaviour
         YesButton.onClick.AddListener(() =>
         {
             SoundEffectsController.Instance.PlayUiSound(ButtonClickSound);
+            CursorController.Instance.SetCursor(CursorKind.Default);
             HandleAction(YesAction);
         });
 
         NoButton.onClick.AddListener(() =>
         {
             SoundEffectsController.Instance.PlayUiSound(ButtonClickSound);
+            CursorController.Instance.SetCursor(CursorKind.Default);
             HandleAction(NoAction);
         });
     }

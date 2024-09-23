@@ -39,6 +39,7 @@ public sealed class MainMenu : MonoBehaviour
 
         StartButton.onClick.AddListener(() =>
         {
+            CursorController.Instance.SetCursor(CursorKind.Default);
             SoundEffectsController.Instance.PlayUiSound(ButtonClickSound);
 
             CanvasGroup.interactable = false;

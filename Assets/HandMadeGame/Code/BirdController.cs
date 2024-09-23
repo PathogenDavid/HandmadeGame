@@ -44,9 +44,6 @@ public class BirdController : MonoBehaviour
         };
 
         Cursor.lockState = CursorLockMode.Locked;
-#if !UNITY_EDITOR && UNITY_WEBGL
-        WebGLInput.stickyCursorLock = false;
-#endif
     }
 
     private void FixedUpdate()

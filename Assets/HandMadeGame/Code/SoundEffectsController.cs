@@ -17,6 +17,7 @@ public sealed class SoundEffectsController : MonoBehaviour
 
     public AudioSource UiAudioSource;
     public AudioSource BirdChirpAudioSource;
+    public AudioSource FlapAudioSource;
     public float ChirpPitchVariance = 0.2f;
 
     public void PlayUiSound(AudioClip uiSound)
@@ -41,5 +42,12 @@ public sealed class SoundEffectsController : MonoBehaviour
         BirdChirpAudioSource.clip = chirp;
         BirdChirpAudioSource.pitch = pitch;
         BirdChirpAudioSource.Play();
+    }
+
+    public void PlayFlap(Random random, AudioClip[] flapSounds) {
+        if (flapSounds == null || flapSounds.Length == 0) return;
+
+        AudioClip flap = flapSounds[random.Next(0, flapSounds.Length)];
+        FlapAudioSource.PlayOneShot(flap);
     }
 }
